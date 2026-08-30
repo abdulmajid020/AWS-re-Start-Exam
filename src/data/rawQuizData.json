@@ -1,0 +1,2108 @@
+{
+  "course_id": 4381,
+  "course_name": "AWS re/Start GHACC71",
+  "total_knowledge_checks": 96,
+  "sorted_order": "A to Z",
+  "knowledge_checks": [
+    {
+      "index": 1,
+      "id": 633579,
+      "title": "KC - Additional Networking Protocols",
+      "category": "Networking",
+      "summary": "Covers essential application, transport, and internet layer protocols including DHCP, NTP, SSH, Telnet, FTP, TFTP, SMTP, POP3, IMAP, and ICMP.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which protocol dynamically assigns IP addresses, subnet masks, and default gateway configurations to network hosts?",
+          "options": [
+            "DNS",
+            "DHCP",
+            "ARP",
+            "NTP"
+          ],
+          "correct_answer": "DHCP (Dynamic Host Configuration Protocol)",
+          "explanation": "DHCP automatically allocates IP addresses and related network parameters (subnet mask, default gateway, DNS servers) to client devices from a defined pool, preventing manual configuration conflicts."
+        },
+        {
+          "question_number": 2,
+          "question": "Which protocol securely transmits command-line sessions over an encrypted channel using TCP port 22?",
+          "options": [
+            "Telnet",
+            "SSH",
+            "FTP",
+            "RDP"
+          ],
+          "correct_answer": "SSH (Secure Shell)",
+          "explanation": "SSH provides strong cryptographic authentication and encrypted terminal communication over TCP port 22, replacing insecure plaintext protocols like Telnet (port 23)."
+        },
+        {
+          "question_number": 3,
+          "question": "Which protocol synchronizes computer clock times over packet-switched, variable-latency data networks?",
+          "options": [
+            "SNMP",
+            "NTP",
+            "ICMP",
+            "SMTP"
+          ],
+          "correct_answer": "NTP (Network Time Protocol)",
+          "explanation": "NTP operates over UDP port 123 to synchronize clocks across distributed systems to within milliseconds of UTC, critical for authentication tokens, log analysis, and database transactions."
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "id": 633584,
+      "title": "KC - Additional Networking Technologies",
+      "category": "Networking",
+      "summary": "Focuses on network acceleration, content delivery networks (CDNs), load balancing topologies, VPN tunnels, and AWS Direct Connect dedicated links.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the primary function of a Content Delivery Network (CDN) such as Amazon CloudFront?",
+          "options": [
+            "Host primary relational databases",
+            "Cache static and streaming web assets at Edge Locations close to end users to reduce latency",
+            "Replace the need for an Amazon VPC",
+            "Provide physical fiber-optic cables"
+          ],
+          "correct_answer": "Cache static and streaming web assets at Edge Locations close to end users to reduce latency",
+          "explanation": "CDNs store copies of cached web content across a globally distributed network of Points of Presence (Edge Locations), ensuring low latency and high transfer speeds for users worldwide."
+        },
+        {
+          "question_number": 2,
+          "question": "Which service establishes a dedicated, private network connection from an on-premises data center directly to AWS, bypassing the public internet?",
+          "options": [
+            "AWS Direct Connect",
+            "AWS Site-to-Site VPN",
+            "Internet Gateway",
+            "Amazon Route 53"
+          ],
+          "correct_answer": "AWS Direct Connect",
+          "explanation": "AWS Direct Connect links your internal network to an AWS Direct Connect location over a standard Ethernet fiber-optic cable, bypassing the public internet for consistent throughput and reduced egress costs."
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "id": 633589,
+      "title": "KC - Advantages of Cloud Computing",
+      "category": "Cloud Foundations",
+      "summary": "Details the 6 core advantages of AWS cloud computing: trade capital expense for variable expense, benefit from massive economies of scale, stop guessing capacity, increase speed and agility, stop spending money running data centers, and go global in minutes.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which advantage of cloud computing allows businesses to pay only for compute resources as they consume them rather than investing in upfront hardware?",
+          "options": [
+            "Trade capital expense for variable expense",
+            "Stop guessing capacity",
+            "Benefit from massive economies of scale",
+            "Go global in minutes"
+          ],
+          "correct_answer": "Trade capital expense for variable expense",
+          "explanation": "Instead of investing heavily in physical data centers and servers before knowing how they will be used (CapEx), cloud computing allows organizations to pay only for computing resources as they consume them (OpEx)."
+        },
+        {
+          "question_number": 2,
+          "question": "How does AWS achieve lower pay-as-you-go pricing for customers over time?",
+          "options": [
+            "By charging mandatory subscription fees",
+            "Through massive economies of scale resulting from aggregated usage across hundreds of thousands of customers",
+            "By limiting feature releases",
+            "By restricting instance uptime"
+          ],
+          "correct_answer": "Through massive economies of scale resulting from aggregated usage across hundreds of thousands of customers",
+          "explanation": "Because hundreds of thousands of customers aggregate usage in the cloud, AWS achieves higher economies of scale, translating directly into regular price reductions."
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "id": 633594,
+      "title": "KC - Amazon DynamoDB",
+      "category": "Databases",
+      "summary": "Covers fully managed NoSQL key-value and document databases, predictable single-digit millisecond latency at scale, Partition Keys, Sort Keys, Global Secondary Indexes, and DynamoDB Streams.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What type of database is Amazon DynamoDB?",
+          "options": [
+            "Relational SQL Database",
+            "Fully managed NoSQL Key-Value and Document Database",
+            "Graph Database",
+            "Data Warehouse"
+          ],
+          "correct_answer": "Fully managed NoSQL Key-Value and Document Database",
+          "explanation": "DynamoDB is a serverless, non-relational database delivering single-digit millisecond performance at any scale with automated multi-AZ replication, built-in security, and backup."
+        },
+        {
+          "question_number": 2,
+          "question": "Which attribute in a DynamoDB table determines the physical partition where data items are stored?",
+          "options": [
+            "Sort Key",
+            "Partition Key (Hash Attribute)",
+            "Secondary Index",
+            "Foreign Key"
+          ],
+          "correct_answer": "Partition Key (Hash Attribute)",
+          "explanation": "DynamoDB uses the partition key value as an input to an internal hash function to determine the partition (physical storage internal to DynamoDB) in which the item will be stored."
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "id": 633599,
+      "title": "KC - Amazon RDS",
+      "category": "Databases",
+      "summary": "Covers managed relational database engines (PostgreSQL, MySQL, MariaDB, Oracle, SQL Server, Aurora), Multi-AZ high availability deployments, Read Replicas for read scaling, automated backups, and maintenance windows.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the primary benefit of enabling Multi-AZ deployment for an Amazon RDS database instance?",
+          "options": [
+            "Improving read throughput for heavy reporting queries",
+            "High availability and automatic synchronous failover to a standby instance in another Availability Zone",
+            "Disabling database backups to save costs",
+            "Sharding data across different AWS regions"
+          ],
+          "correct_answer": "High availability and automatic synchronous failover to a standby instance in another Availability Zone",
+          "explanation": "Multi-AZ synchronously replicates database transactions to a standby replica in a second AZ. In the event of planned maintenance or an unplanned outage, RDS automatically fails over without manual intervention."
+        },
+        {
+          "question_number": 2,
+          "question": "Which Amazon RDS feature should you deploy to scale out read-heavy database workloads?",
+          "options": [
+            "Read Replicas",
+            "Multi-AZ Standby Instances",
+            "EBS Provisioned IOPS",
+            "Database Parameter Groups"
+          ],
+          "correct_answer": "Read Replicas",
+          "explanation": "Read Replicas use asynchronous replication to offload read-intensive queries (such as analytics or reporting) from the primary database, increasing overall read scalability."
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "id": 633608,
+      "title": "KC - Amazon Virtual Private Cloud [VPC]",
+      "category": "Networking",
+      "summary": "Covers logically isolated virtual networks in AWS, CIDR IP address blocks, Public/Private subnets, Internet Gateways (IGW), NAT Gateways, Route Tables, and Network ACLs.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which VPC component enables instances in a private subnet to initiate outbound internet connections for software updates while preventing inbound internet connections?",
+          "options": [
+            "Internet Gateway",
+            "NAT Gateway",
+            "Virtual Private Gateway",
+            "VPC Endpoint"
+          ],
+          "correct_answer": "NAT Gateway",
+          "explanation": "A NAT (Network Address Translation) Gateway in a public subnet allows private subnet instances to connect outbound to the internet while blocking incoming traffic initiated from the internet."
+        },
+        {
+          "question_number": 2,
+          "question": "What is the key difference between Security Groups and Network Access Control Lists (NACLs)?",
+          "options": [
+            "Security Groups are stateless at subnet level; NACLs are stateful at instance level",
+            "Security Groups are stateful firewalls at instance ENI level; NACLs are stateless firewalls at subnet boundary level",
+            "Security Groups only block traffic; NACLs only allow traffic",
+            "NACLs apply to individual EC2 instances"
+          ],
+          "correct_answer": "Security Groups are stateful firewalls at instance ENI level; NACLs are stateless firewalls at subnet boundary level",
+          "explanation": "Security groups operate at the virtual network interface (ENI) level and are stateful (return traffic is automatically permitted). NACLs operate at the subnet boundary and are stateless (explicit allow/deny rules required in both directions)."
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "id": 633604,
+      "title": "KC - Amazon VPC",
+      "category": "Networking",
+      "summary": "Examines VPC peering, VPC endpoints (Interface & Gateway), Transit Gateways, route table configurations, and hybrid connectivity.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS networking service connects multiple VPCs and on-premises networks together through a centralized hub?",
+          "options": [
+            "AWS Transit Gateway",
+            "Internet Gateway",
+            "NAT Gateway",
+            "VPC Peering Connection"
+          ],
+          "correct_answer": "AWS Transit Gateway",
+          "explanation": "AWS Transit Gateway acts as a cloud router, simplifying network topologies by connecting thousands of VPCs and on-premises data centers via a single central gateway."
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "id": 633613,
+      "title": "KC - An Introduction to Linux",
+      "category": "Linux & Scripting",
+      "summary": "Introduces the Linux operating system kernel, GNU userland utilities, shell environments, root superuser architecture, open-source distributions, and file system hierarchy.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the core component of the Linux operating system that manages hardware resources, CPU scheduling, and memory allocation?",
+          "options": [
+            "The Shell",
+            "The Kernel",
+            "The File System",
+            "GNU Coreutils"
+          ],
+          "correct_answer": "The Kernel",
+          "explanation": "The Linux kernel is the central core of the OS that directly controls hardware components, manages processes, handles memory, and exposes system calls to application software."
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "id": 633618,
+      "title": "KC - Analysis",
+      "category": "Cloud Architecture",
+      "summary": "Covers gathering business requirements, analyzing architectural trade-offs, evaluating cost efficiency, risk assessment, and application modernization strategies.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "When migrating legacy on-premises applications to AWS, which analysis strategy focuses on lifting and shifting workloads with minimal or no code changes?",
+          "options": [
+            "Replatforming",
+            "Rehosting (Lift and Shift)",
+            "Refactoring / Re-architecting",
+            "Retiring"
+          ],
+          "correct_answer": "Rehosting (Lift and Shift)",
+          "explanation": "Rehosting moves applications to the cloud without modifying the core architecture or code, providing the fastest route to migration while reducing on-premises data center overhead."
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "id": 633625,
+      "title": "KC - Assessment Scenario Certification Preparation",
+      "category": "Certification Prep",
+      "summary": "Provides scenario-based question analysis, identifying key requirements (availability, performance, cost-efficiency, security) in certification questions, and eliminating distractor options.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In AWS certification scenario questions, when a prompt specifies 'the most cost-effective solution with no server maintenance', which architecture pattern should you prioritize?",
+          "options": [
+            "Over-provisioned EC2 Dedicated Hosts",
+            "Serverless architectures utilizing AWS Lambda, Amazon API Gateway, and Amazon S3",
+            "Self-managed multi-node database clusters on EC2",
+            "On-Demand EC2 instances running 24/7"
+          ],
+          "correct_answer": "Serverless architectures utilizing AWS Lambda, Amazon API Gateway, and Amazon S3",
+          "explanation": "Serverless services require zero server management, scale automatically from zero, and only incur charges during active execution, delivering the highest cost efficiency."
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "id": 634021,
+      "title": "KC - AWS Architecture",
+      "category": "Cloud Architecture",
+      "summary": "Covers the 6 Pillars of the AWS Well-Architected Framework: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which Well-Architected Framework pillar focuses on the ability of a workload to perform its intended function correctly and consistently, including recovering from infrastructure or service disruptions?",
+          "options": [
+            "Performance Efficiency",
+            "Reliability",
+            "Cost Optimization",
+            "Operational Excellence"
+          ],
+          "correct_answer": "Reliability",
+          "explanation": "The Reliability pillar encompasses designing distributed systems that can automatically recover from failures, dynamically acquire resources to meet demand, and mitigate disruptions like misconfigurations or transient network issues."
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "id": 633534,
+      "title": "KC - AWS CloudTrail",
+      "category": "Security & Monitoring",
+      "summary": "Focuses on auditing, compliance monitoring, governance, and logging all AWS API activity, caller identity, request timestamps, and source IP addresses across your AWS account.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the primary purpose of AWS CloudTrail?",
+          "options": [
+            "Monitor EC2 CPU and RAM metrics in real-time",
+            "Log, continuously monitor, and retain account activity and API calls related to actions across your AWS infrastructure",
+            "Automatically fix application bugs",
+            "Perform automated database query tuning"
+          ],
+          "correct_answer": "Log, continuously monitor, and retain account activity and API calls related to actions across your AWS infrastructure",
+          "explanation": "CloudTrail records actions taken by a user, role, or AWS service as events. It provides full governance, compliance auditing, operational troubleshooting, and risk auditing."
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "id": 633538,
+      "title": "KC - AWS Config",
+      "category": "Security & Monitoring",
+      "summary": "Covers continuous tracking and evaluation of AWS resource configurations, assessing compliance against desired baselines and automated remediation rules.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS service enables you to evaluate whether your AWS resources comply with specific organizational security policies and configuration rules over time?",
+          "options": [
+            "AWS Config",
+            "Amazon CloudWatch",
+            "AWS CloudTrail",
+            "AWS Shield"
+          ],
+          "correct_answer": "AWS Config",
+          "explanation": "AWS Config continuously monitors and records your AWS resource configurations and allows you to automate the evaluation of recorded configurations against desired configurations."
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "id": 633543,
+      "title": "KC - AWS Database Services",
+      "category": "Databases",
+      "summary": "Compares purpose-built AWS database engines: Relational (RDS, Aurora), Key-Value (DynamoDB), In-Memory (ElastiCache), Document (DocumentDB), Graph (Neptune), and Time-Series (Timestream).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which fully managed in-memory data store service is best suited for sub-millisecond caching of database queries using Redis or Memcached?",
+          "options": [
+            "Amazon Redshift",
+            "Amazon ElastiCache",
+            "Amazon RDS",
+            "Amazon DynamoDB"
+          ],
+          "correct_answer": "Amazon ElastiCache",
+          "explanation": "Amazon ElastiCache provides ultra-fast in-memory caching to boost performance of read-heavy applications and eliminate database bottlenecks."
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "id": 633547,
+      "title": "KC - AWS Global Infrastructure",
+      "category": "Cloud Foundations",
+      "summary": "Explains Regions, Availability Zones (AZs), Edge Locations / Points of Presence (PoPs), Regional vs. Global services, and low-latency global delivery.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is an AWS Availability Zone (AZ)?",
+          "options": [
+            "A geographic country containing one data center",
+            "One or more discrete data centers with redundant power, networking, and connectivity in an AWS Region",
+            "A global edge caching server",
+            "A virtual software partition"
+          ],
+          "correct_answer": "One or more discrete data centers with redundant power, networking, and connectivity in an AWS Region",
+          "explanation": "An Availability Zone consists of one or more physical data centers designed for fault isolation with low-latency private fiber connectivity to other AZs within the same Region."
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "id": 633551,
+      "title": "KC - AWS IAM",
+      "category": "Security & IAM",
+      "summary": "Covers Identity and Access Management: IAM Users, Groups, Roles, Policies (JSON format with Effect, Action, Resource, Condition), Multi-Factor Authentication (MFA), and Least Privilege.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which IAM entity should be assigned to an Amazon EC2 instance so that applications running on it can securely access Amazon S3 without hardcoding long-term credentials?",
+          "options": [
+            "IAM User",
+            "IAM Role",
+            "IAM Group",
+            "Root User Credentials"
+          ],
+          "correct_answer": "IAM Role",
+          "explanation": "IAM Roles provide temporary security credentials that are automatically rotated by AWS, eliminating the need to store sensitive API access keys on compute instances."
+        }
+      ]
+    },
+    {
+      "index": 17,
+      "id": 633555,
+      "title": "KC - AWS Infrastructure Overview",
+      "category": "Cloud Foundations",
+      "summary": "High-level overview of physical infrastructure, hypervisors (Nitro System), data center redundancy, submarine cables, and global backbone networks.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What modern hardware and software virtualization architecture underpins current-generation AWS EC2 instances for enhanced performance and security?",
+          "options": [
+            "AWS Nitro System",
+            "Xen Classic Hypervisor",
+            "VMware Workstation",
+            "VirtualBox"
+          ],
+          "correct_answer": "AWS Nitro System",
+          "explanation": "The AWS Nitro System offloads virtualization, networking, and storage functions to dedicated hardware cards, delivering near bare-metal performance and enhanced security."
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "id": 633560,
+      "title": "KC - AWS Networking Services",
+      "category": "Networking",
+      "summary": "Synthesizes Amazon VPC, Route 53, Elastic Load Balancing, AWS Direct Connect, AWS Global Accelerator, and CloudFront into unified network topologies.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which highly available and scalable cloud Domain Name System (DNS) web service translates human-readable domain names into numeric IP addresses?",
+          "options": [
+            "Amazon Route 53",
+            "Amazon VPC",
+            "AWS Direct Connect",
+            "Amazon CloudFront"
+          ],
+          "correct_answer": "Amazon Route 53",
+          "explanation": "Amazon Route 53 is AWS's authoritative DNS service, providing domain registration, health checks, and intelligent routing policies (latency, geo-proximity, failover)."
+        }
+      ]
+    },
+    {
+      "index": 19,
+      "id": 633564,
+      "title": "KC - AWS Security Compliance Program",
+      "category": "Security & Compliance",
+      "summary": "Covers compliance certifications, regulatory standards (SOC 1/2/3, ISO 27001, PCI-DSS, HIPAA, FedRAMP), and AWS Artifact on-demand compliance reports.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Where can customers access on-demand AWS security and compliance reports, such as SOC and PCI-DSS audit certifications?",
+          "options": [
+            "AWS Artifact",
+            "AWS Trusted Advisor",
+            "AWS Shield",
+            "Amazon GuardDuty"
+          ],
+          "correct_answer": "AWS Artifact",
+          "explanation": "AWS Artifact is the central portal for on-demand access to AWS's security and compliance documentation, third-party audit reports, and agreements."
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "id": 633569,
+      "title": "KC - AWS Security Resources",
+      "category": "Security & Monitoring",
+      "summary": "Examines specialized security services including AWS WAF, AWS Shield, AWS Secrets Manager, Amazon GuardDuty, Amazon Inspector, and AWS KMS.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which intelligent threat detection service continuously analyzes VPC Flow Logs, CloudTrail event logs, and DNS logs using machine learning to detect unauthorized behavior?",
+          "options": [
+            "Amazon GuardDuty",
+            "AWS WAF",
+            "AWS KMS",
+            "AWS Artifact"
+          ],
+          "correct_answer": "Amazon GuardDuty",
+          "explanation": "Amazon GuardDuty provides automated threat detection by analyzing billions of events across AWS account data sources to identify compromised instances or anomalous activity."
+        }
+      ]
+    },
+    {
+      "index": 21,
+      "id": 633574,
+      "title": "KC - AWS Services and Service Categories",
+      "category": "Cloud Foundations",
+      "summary": "Comprehensive taxonomy of AWS services across Compute, Storage, Database, Networking, Security, Management & Governance, Developer Tools, Analytics, and AI/ML.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Under which AWS service category do Amazon S3, Amazon EBS, and Amazon EFS belong?",
+          "options": [
+            "Compute",
+            "Storage",
+            "Database",
+            "Networking"
+          ],
+          "correct_answer": "Storage",
+          "explanation": "S3 (object storage), EBS (block storage), and EFS (elastic file system) represent the core services in the AWS Storage category."
+        }
+      ]
+    },
+    {
+      "index": 22,
+      "id": 633630,
+      "title": "KC - Balancing - Scaling - Monitoring",
+      "category": "Cloud Architecture",
+      "summary": "Focuses on high-availability architectural triangles: Application Load Balancers distributing traffic, Auto Scaling Groups dynamically adapting capacity, and CloudWatch metrics triggering scaling events.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "How do Auto Scaling Groups maintain application availability when an EC2 instance becomes unhealthy?",
+          "options": [
+            "By automatically terminating the unhealthy instance and launching a new healthy replacement instance based on launch templates",
+            "By sending an email and waiting for manual human intervention",
+            "By rebooting the entire AWS region",
+            "By converting the instance into an S3 bucket"
+          ],
+          "correct_answer": "By automatically terminating the unhealthy instance and launching a new healthy replacement instance based on launch templates",
+          "explanation": "Auto Scaling performs health checks on all managed instances. If an instance fails ALB or EC2 health checks, it is terminated and replaced seamlessly to maintain desired capacity."
+        }
+      ]
+    },
+    {
+      "index": 23,
+      "id": 633634,
+      "title": "KC - Bash Shell Scripts",
+      "category": "Linux & Scripting",
+      "summary": "Covers shebang syntax (#!/bin/bash), variables, positional parameters ($1, $2, $#), conditional statements (if/else), loops (for/while), exit statuses ($?), and executing scripts.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the correct shebang line at the beginning of a Bash shell script to specify the interpreter?",
+          "options": [
+            "#!/bin/bash",
+            "#!/usr/env",
+            "#!/bin/sh -x",
+            "//bin/bash"
+          ],
+          "correct_answer": "#!/bin/bash",
+          "explanation": "The shebang `#!/bin/bash` tells the Linux kernel to execute the script using the Bash shell interpreter located at `/bin/bash`."
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "id": 633640,
+      "title": "KC - Basic Computing Concepts",
+      "category": "Computing Fundamentals",
+      "summary": "Covers CPU, RAM, primary vs. secondary storage, binary/byte units, operating systems, client-server models, and virtualization.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which component of a computer system provides high-speed volatile memory for active running programs?",
+          "options": [
+            "Hard Disk Drive (HDD)",
+            "Random Access Memory (RAM)",
+            "Solid State Drive (SSD)",
+            "Optical Drive"
+          ],
+          "correct_answer": "Random Access Memory (RAM)",
+          "explanation": "RAM is primary volatile memory where instructions and data are held for rapid CPU execution; its contents are lost when the system is powered down."
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "id": 633646,
+      "title": "KC - Billing and Support",
+      "category": "Billing & Support",
+      "summary": "Details AWS Cost Explorer, AWS Budgets, Billing Alarms, AWS Support Plans (Basic, Developer, Business, Enterprise), and Cost Allocation Tags.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS Support Plan provides 24/7 technical support by phone, email, and chat with a 1-hour response time for critical system down issues, plus access to Infrastructure Event Management?",
+          "options": [
+            "Basic Support",
+            "Developer Support",
+            "Business Support",
+            "Enterprise Support"
+          ],
+          "correct_answer": "Enterprise Support",
+          "explanation": "Enterprise Support offers 15-minute response times for business-critical outages, a designated Technical Account Manager (TAM), and proactive Architectural Reviews."
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "id": 633652,
+      "title": "KC - Cloud Architecting",
+      "category": "Cloud Architecture",
+      "summary": "Examines design principles: decouple components, design for failure, implement elasticity, automate deployment, and leverage managed services.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the architectural benefit of decoupling application components using Amazon SQS queues?",
+          "options": [
+            "It eliminates the need for database storage",
+            "Components can scale and fail independently without cascading failures throughout the system",
+            "It makes compute instances run without electricity",
+            "It converts all applications to static websites"
+          ],
+          "correct_answer": "Components can scale and fail independently without cascading failures throughout the system",
+          "explanation": "Decoupled architectures using message queues buffer requests so producers and consumers process workloads asynchronously at their own independent rates."
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "id": 633656,
+      "title": "KC - Cloud Computing",
+      "category": "Cloud Foundations",
+      "summary": "Defines cloud computing: on-demand delivery of IT resources over the internet with pay-as-you-go pricing; compares IaaS, PaaS, and SaaS models.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which cloud service model provides the highest level of customer control over operating systems, networking, and virtual hardware?",
+          "options": [
+            "Infrastructure as a Service (IaaS)",
+            "Platform as a Service (PaaS)",
+            "Software as a Service (SaaS)",
+            "Function as a Service (FaaS)"
+          ],
+          "correct_answer": "Infrastructure as a Service (IaaS)",
+          "explanation": "IaaS (e.g. Amazon EC2) gives customers direct control over OS selection, installed packages, storage volumes, and network routing."
+        }
+      ]
+    },
+    {
+      "index": 28,
+      "id": 633662,
+      "title": "KC - Cloud Economics",
+      "category": "Billing & Support",
+      "summary": "Total Cost of Ownership (TCO), capital vs. operational expenses, return on investment (ROI), and pricing calculators.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is a major financial benefit of moving from on-premises infrastructure to AWS?",
+          "options": [
+            "Switching from upfront Capital Expenditures (CapEx) to flexible Variable Operational Expenditures (OpEx)",
+            "Requiring mandatory 5-year hardware replacement cycles",
+            "Paying upfront for 100% of peak estimated 5-year capacity",
+            "Eliminating all software development"
+          ],
+          "correct_answer": "Switching from upfront Capital Expenditures (CapEx) to flexible Variable Operational Expenditures (OpEx)",
+          "explanation": "Cloud computing replaces large upfront capital investments with monthly operational expenses based directly on actual real-time resource consumption."
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "id": 633669,
+      "title": "KC - Compute",
+      "category": "Compute",
+      "summary": "Covers compute options in AWS: Virtual Machines (EC2), Serverless Functions (Lambda), Containers (ECS, EKS, Fargate), and Batch processing (AWS Batch).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which serverless compute service runs code in response to triggers and automatically manages compute resources with zero server provisioning?",
+          "options": [
+            "Amazon EC2",
+            "AWS Lambda",
+            "Amazon Lightsail",
+            "Amazon ECS"
+          ],
+          "correct_answer": "AWS Lambda",
+          "explanation": "AWS Lambda executes code only when triggered by events (S3 uploads, API Gateway calls, DynamoDB streams) and bills in millisecond increments."
+        }
+      ]
+    },
+    {
+      "index": 30,
+      "id": 633674,
+      "title": "KC - Configuration Management",
+      "category": "DevOps & Automation",
+      "summary": "Examines managing software configurations at scale using AWS Systems Manager State Manager, AWS OpsWorks, Ansible, and automated patching.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS Systems Manager capability automates software configuration baselines and ensures EC2 instances remain in a desired consistent state?",
+          "options": [
+            "State Manager",
+            "Session Manager",
+            "Parameter Store",
+            "Patch Manager"
+          ],
+          "correct_answer": "State Manager",
+          "explanation": "Systems Manager State Manager automates the process of maintaining OS configurations, anti-virus agents, and software versions in a defined consistent state."
+        }
+      ]
+    },
+    {
+      "index": 31,
+      "id": 633679,
+      "title": "KC - Creating Automated Repeatable Deployments",
+      "category": "DevOps & Automation",
+      "summary": "Covers AWS CloudFormation, AWS CDK, infrastructure templates, drift detection, and automated CI/CD deployment pipelines.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS Infrastructure as Code (IaC) service allows you to model, provision, and update AWS and third-party resources using JSON or YAML declarative templates?",
+          "options": [
+            "AWS CloudFormation",
+            "AWS CodeDeploy",
+            "AWS Elastic Beanstalk",
+            "AWS Config"
+          ],
+          "correct_answer": "AWS CloudFormation",
+          "explanation": "CloudFormation allows you to treat infrastructure as code, version-controlling entire multi-tier architectures and deploying identical environments reliably across regions."
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "id": 633684,
+      "title": "KC - Creating Tables and Learning Different Data Types",
+      "category": "Databases",
+      "summary": "SQL schema creation (CREATE TABLE), primary keys, foreign keys, constraints, and data types (VARCHAR, INT, FLOAT, TIMESTAMP, BOOLEAN).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In a relational SQL database, which constraint uniquely identifies each record in a table and cannot contain NULL values?",
+          "options": [
+            "Foreign Key",
+            "Primary Key",
+            "Default Constraint",
+            "Index Constraint"
+          ],
+          "correct_answer": "Primary Key",
+          "explanation": "A primary key column enforces unique values for each row in the table, guaranteeing entity integrity and serving as a target for foreign keys."
+        }
+      ]
+    },
+    {
+      "index": 33,
+      "id": 633689,
+      "title": "KC - Data Interaction and Database Transaction",
+      "category": "Databases",
+      "summary": "Covers ACID properties (Atomicity, Consistency, Isolation, Durability), transaction management (COMMIT, ROLLBACK), and locking mechanisms.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which ACID property guarantees that all database operations in a transaction either complete entirely or are completely rolled back if an error occurs?",
+          "options": [
+            "Atomicity",
+            "Consistency",
+            "Isolation",
+            "Durability"
+          ],
+          "correct_answer": "Atomicity",
+          "explanation": "Atomicity ensures 'all-or-nothing' execution: if any part of a multi-step transaction fails, the entire transaction is aborted and changes are discarded."
+        }
+      ]
+    },
+    {
+      "index": 34,
+      "id": 633693,
+      "title": "KC - Data Security",
+      "category": "Security & Monitoring",
+      "summary": "Covers encryption in transit (TLS/SSL), encryption at rest (AWS KMS, AES-256), client-side vs. server-side encryption, and tokenization.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which managed AWS service creates, rotates, and controls cryptographic keys used to encrypt data across AWS services and customer applications?",
+          "options": [
+            "AWS Key Management Service (KMS)",
+            "AWS Secrets Manager",
+            "AWS Certificate Manager",
+            "AWS Shield"
+          ],
+          "correct_answer": "AWS Key Management Service (KMS)",
+          "explanation": "AWS KMS provides centralized hardware-backed key creation, policy enforcement, and audit logging integrated across EBS, S3, RDS, and DynamoDB."
+        }
+      ]
+    },
+    {
+      "index": 35,
+      "id": 633698,
+      "title": "KC - Databases",
+      "category": "Databases",
+      "summary": "General overview of database architectures: SQL vs NoSQL, structured vs unstructured data, scalability characteristics, and latency profiles.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is a key difference between relational (SQL) databases and non-relational (NoSQL) databases?",
+          "options": [
+            "SQL databases use predefined schemas and table joins; NoSQL databases use flexible data models optimized for horizontal scaling",
+            "SQL databases cannot store text",
+            "NoSQL databases require physical on-premises servers",
+            "NoSQL databases only work with binary code"
+          ],
+          "correct_answer": "SQL databases use predefined schemas and table joins; NoSQL databases use flexible data models optimized for horizontal scaling",
+          "explanation": "Relational databases enforce strict relational schemas and ACID compliance, while NoSQL databases accommodate schema-less documents, key-values, and massive horizontal scale."
+        }
+      ]
+    },
+    {
+      "index": 36,
+      "id": 633702,
+      "title": "KC - Debugging and Testing",
+      "category": "DevOps & Automation",
+      "summary": "Covers unit testing, integration testing, debugging techniques, log inspection, error handling, and test-driven development (TDD).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What type of software test verifies that individual functions and code modules work in isolation from external dependencies?",
+          "options": [
+            "Unit Test",
+            "Integration Test",
+            "End-to-End Test",
+            "Load Test"
+          ],
+          "correct_answer": "Unit Test",
+          "explanation": "Unit testing tests individual functions, methods, or components in isolation to catch logic errors early in the development lifecycle."
+        }
+      ]
+    },
+    {
+      "index": 37,
+      "id": 633708,
+      "title": "KC - Detection",
+      "category": "Security & Monitoring",
+      "summary": "Examines security monitoring, automated alert generation, anomaly detection with GuardDuty, and centralizing security findings in AWS Security Hub.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS service aggregates, organizes, and prioritizes security alerts and compliance findings from multiple AWS services into a single centralized dashboard?",
+          "options": [
+            "AWS Security Hub",
+            "AWS Cloud9",
+            "AWS Direct Connect",
+            "Amazon Route 53"
+          ],
+          "correct_answer": "AWS Security Hub",
+          "explanation": "AWS Security Hub gives a comprehensive view of security posture across accounts by collecting findings from GuardDuty, Inspector, Macie, IAM Access Analyzer, and AWS Firewall Manager."
+        }
+      ]
+    },
+    {
+      "index": 38,
+      "id": 633719,
+      "title": "KC - Development Team Roles",
+      "category": "DevOps & Automation",
+      "summary": "Covers software engineering roles: Product Owner, Scrum Master, Frontend/Backend Developer, DevOps Engineer, QA Engineer, and Cloud Architect.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In an Agile/Scrum team, which role is responsible for prioritizing the product backlog to maximize business value for stakeholders?",
+          "options": [
+            "Product Owner",
+            "Scrum Master",
+            "DevOps Engineer",
+            "Database Administrator"
+          ],
+          "correct_answer": "Product Owner",
+          "explanation": "The Product Owner defines user stories, prioritizes the product backlog based on customer requirements, and ensures the development team builds the highest-value features."
+        }
+      ]
+    },
+    {
+      "index": 39,
+      "id": 633713,
+      "title": "KC - DevOps and Continuous Integration",
+      "category": "DevOps & Automation",
+      "summary": "Covers CI/CD pipelines, automated testing, version control (CodeCommit/Git), continuous build (CodeBuild), and automated deployment (CodeDeploy, CodePipeline).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the primary goal of Continuous Integration (CI) in a DevOps culture?",
+          "options": [
+            "Automatically building and running unit tests on code changes as soon as developers commit to the shared repository",
+            "Manually releasing software once per year",
+            "Replacing all software developers with robots",
+            "Deleting code repositories after testing"
+          ],
+          "correct_answer": "Automatically building and running unit tests on code changes as soon as developers commit to the shared repository",
+          "explanation": "CI ensures that code branches are regularly merged into a central repo, triggering automated builds and tests to detect integration defects early."
+        }
+      ]
+    },
+    {
+      "index": 40,
+      "id": 633724,
+      "title": "KC - Editing Files",
+      "category": "Linux & Scripting",
+      "summary": "Command-line text editors in Linux: Vim (Command, Insert, Visual modes, navigation, :wq save/quit), Nano, and standard editing workflows.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In the Vim text editor, which command saves changes and exits the editor back to the shell prompt?",
+          "options": [
+            ":wq or :x",
+            ":q!",
+            "ESC :e",
+            "CTRL+C"
+          ],
+          "correct_answer": ":wq or :x",
+          "explanation": "In Vim command mode, `:w` writes (saves) the file to disk and `:q` quits the editor; combined as `:wq`, it saves and exits immediately."
+        }
+      ]
+    },
+    {
+      "index": 41,
+      "id": 633728,
+      "title": "KC - Flow Control",
+      "category": "Programming & Python",
+      "summary": "Programming logic branching: if-elif-else statements, while loops, for-in loops, break, continue, and pass statements in Python and scripting.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In Python, which statement immediately terminates the innermost enclosing loop and transfers execution to the statement after the loop?",
+          "options": [
+            "break",
+            "continue",
+            "pass",
+            "return"
+          ],
+          "correct_answer": "break",
+          "explanation": "The `break` statement prematurely halts the execution of a `for` or `while` loop, jumping immediately to the next block of code outside the loop."
+        }
+      ]
+    },
+    {
+      "index": 42,
+      "id": 633732,
+      "title": "KC - Functions",
+      "category": "Programming & Python",
+      "summary": "Defining functions (`def`), arguments, default parameters, variable scopes (local vs global), return values, and modular code reuse.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which Python keyword is used to declare a user-defined function?",
+          "options": [
+            "def",
+            "function",
+            "func",
+            "declare"
+          ],
+          "correct_answer": "def",
+          "explanation": "In Python, the `def` keyword begins a function definition header followed by the function name, parameter list, and colon."
+        }
+      ]
+    },
+    {
+      "index": 43,
+      "id": 633739,
+      "title": "KC - Fundamentals of AWS Pricing",
+      "category": "Billing & Support",
+      "summary": "Covers pay-as-you-go, save when you commit (Savings Plans, Reserved Instances), pay less by using more (tiered volume discounts), and Free Tier.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which pricing model offers up to 72% discounts on EC2, Fargate, and Lambda in exchange for committing to a consistent hourly compute usage for a 1 or 3 year term?",
+          "options": [
+            "Compute Savings Plans",
+            "Spot Instances",
+            "On-Demand Instances",
+            "Dedicated Hosts"
+          ],
+          "correct_answer": "Compute Savings Plans",
+          "explanation": "Compute Savings Plans provide substantial savings in exchange for a commitment to a consistent amount of compute usage (measured in $/hour) across instance families, sizes, OS, and regions."
+        }
+      ]
+    },
+    {
+      "index": 44,
+      "id": 633752,
+      "title": "KC - Identity and Access Management [IAM]",
+      "category": "Security & IAM",
+      "summary": "JSON permission policies, explicit allow vs explicit deny, principle of least privilege, service-linked roles, and permission boundaries.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "If an IAM policy contains an explicit Deny on an action, how does it interact with an explicit Allow on the same action?",
+          "options": [
+            "The explicit Deny always overrides any Allow",
+            "The explicit Allow overrides the Deny",
+            "The policy errors and ignores both",
+            "The newest policy takes precedence"
+          ],
+          "correct_answer": "The explicit Deny always overrides any Allow",
+          "explanation": "In AWS IAM evaluation logic, an explicit Deny always trumps an Allow. By default, access is denied unless explicitly allowed and not explicitly denied."
+        }
+      ]
+    },
+    {
+      "index": 45,
+      "id": 633748,
+      "title": "KC - Identity Management",
+      "category": "Security & IAM",
+      "summary": "Identity federation, Single Sign-On (AWS IAM Identity Center), SAML 2.0, OpenID Connect, and directory integration with Microsoft Active Directory.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS service provides centralized management of Single Sign-On (SSO) and user access across all AWS accounts in an AWS Organization?",
+          "options": [
+            "AWS IAM Identity Center (AWS SSO)",
+            "Amazon Cognito",
+            "AWS Secrets Manager",
+            "AWS Shield"
+          ],
+          "correct_answer": "AWS IAM Identity Center (AWS SSO)",
+          "explanation": "AWS IAM Identity Center enables administrators to manage SSO access and user permissions across multiple AWS accounts and cloud business applications from a central portal."
+        }
+      ]
+    },
+    {
+      "index": 46,
+      "id": 633757,
+      "title": "KC - Inserting Data into a Database",
+      "category": "Databases",
+      "summary": "SQL data manipulation (INSERT INTO), bulk inserts, parameter substitution, handling duplicate keys, and transactional integrity.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the standard SQL statement used to add new rows of data into a database table?",
+          "options": [
+            "INSERT INTO",
+            "UPDATE",
+            "ALTER TABLE",
+            "SELECT INTO"
+          ],
+          "correct_answer": "INSERT INTO",
+          "explanation": "The `INSERT INTO table_name (columns) VALUES (values);` syntax is used in SQL to insert one or more new records into a database table."
+        }
+      ]
+    },
+    {
+      "index": 47,
+      "id": 633763,
+      "title": "KC - Internet Protocol [IP]",
+      "category": "Networking",
+      "summary": "IPv4 (32-bit dotted-decimal) vs IPv6 (128-bit hexadecimal), private IP ranges (RFC 1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16), and public routable addresses.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which of the following IP address ranges is defined by RFC 1918 as a non-routable private network range?",
+          "options": [
+            "10.0.0.0 to 10.255.255.255",
+            "8.8.8.0 to 8.8.8.255",
+            "1.1.1.0 to 1.1.1.255",
+            "128.0.0.0 to 128.255.255.255"
+          ],
+          "correct_answer": "10.0.0.0 to 10.255.255.255",
+          "explanation": "RFC 1918 designates 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 as reserved private IP blocks for use within private internal networks."
+        }
+      ]
+    },
+    {
+      "index": 48,
+      "id": 633768,
+      "title": "KC - Introduction to Amazon EC2",
+      "category": "Compute",
+      "summary": "Elastic Compute Cloud: instance types (General Purpose, Compute, Memory, Storage Optimized), AMIs, purchasing options (On-Demand, Spot, Reserved), and EBS root volumes.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which EC2 purchasing option offers the largest discounts (up to 90%) for fault-tolerant, stateless batch workloads that can handle interruptions?",
+          "options": [
+            "Spot Instances",
+            "On-Demand Instances",
+            "Dedicated Instances",
+            "Reserved Instances"
+          ],
+          "correct_answer": "Spot Instances",
+          "explanation": "Spot Instances allow customers to take advantage of unused AWS compute capacity at steep discounts, with the condition that instances can be reclaimed by AWS with a 2-minute warning."
+        }
+      ]
+    },
+    {
+      "index": 49,
+      "id": 633772,
+      "title": "KC - Introduction to Amazon S3",
+      "category": "Storage",
+      "summary": "Simple Storage Service: Object storage, buckets, 99.999999999% (11 9s) durability, storage classes (Standard, Intelligent-Tiering, Glacier, Deep Archive), versioning, and lifecycle policies.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the designed data durability of Amazon S3 Standard object storage?",
+          "options": [
+            "99.999999999% (11 9s)",
+            "99.9%",
+            "95.0%",
+            "100.0%"
+          ],
+          "correct_answer": "99.999999999% (11 9s)",
+          "explanation": "S3 is designed to deliver 99.999999999% durability of objects over a given year by automatically replicating objects across multiple physically separated Availability Zones."
+        }
+      ]
+    },
+    {
+      "index": 50,
+      "id": 633778,
+      "title": "KC - Introduction to Cloud Computing",
+      "category": "Cloud Foundations",
+      "summary": "Introduction to cloud concepts, on-demand compute, virtualization, economies of scale, global presence, elasticity, and operational agility.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the fundamental model of cloud computing?",
+          "options": [
+            "On-demand delivery of compute power, database storage, applications, and other IT resources via the internet with pay-as-you-go pricing",
+            "Renting physical servers and installing them in your office closet",
+            "Buying perpetual software licenses on CD-ROM",
+            "Building private data centers in every city"
+          ],
+          "correct_answer": "On-demand delivery of compute power, database storage, applications, and other IT resources via the internet with pay-as-you-go pricing",
+          "explanation": "Cloud computing eliminates the friction of procuring and managing physical servers by offering virtual resources over the web with dynamic scaling and pay-for-what-you-use billing."
+        }
+      ]
+    },
+    {
+      "index": 51,
+      "id": 633782,
+      "title": "KC - Introduction to Databases",
+      "category": "Databases",
+      "summary": "Basics of data storage, DBMS vs RDBMS, tables, rows, columns, queries, indexes, and database management principles.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is a primary advantage of indexing frequently searched columns in a database table?",
+          "options": [
+            "Significantly faster query execution times by avoiding full table scans",
+            "Reducing disk storage usage to zero",
+            "Preventing unauthorized users from reading the table",
+            "Automatically translating SQL queries to HTML"
+          ],
+          "correct_answer": "Significantly faster query execution times by avoiding full table scans",
+          "explanation": "Indexes create fast lookup data structures (like B-trees) that enable the database engine to locate target rows directly without scanning every row in the table."
+        }
+      ]
+    },
+    {
+      "index": 52,
+      "id": 633785,
+      "title": "KC - Introduction to Networking",
+      "category": "Networking",
+      "summary": "OSI 7-Layer Model vs TCP/IP 4-Layer Model, packet encapsulation, routers, switches, MAC addresses, and physical layer transmission.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "At which layer of the OSI model do IP addressing and packet routing take place?",
+          "options": [
+            "Layer 3 (Network Layer)",
+            "Layer 2 (Data Link Layer)",
+            "Layer 4 (Transport Layer)",
+            "Layer 7 (Application Layer)"
+          ],
+          "correct_answer": "Layer 3 (Network Layer)",
+          "explanation": "Layer 3 (the Network layer) is responsible for logical addressing (IPv4/IPv6) and routing data packets across different intermediate networks."
+        }
+      ]
+    },
+    {
+      "index": 53,
+      "id": 633790,
+      "title": "KC - Introduction to Programming",
+      "category": "Programming & Python",
+      "summary": "Programming paradigms, syntax, variables, data structures, control logic, compilers vs. interpreters, and algorithms.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the key difference between a compiled language (like C++) and an interpreted language (like Python)?",
+          "options": [
+            "Compiled languages are converted into machine code before execution; interpreted languages are executed line-by-line by an interpreter at runtime",
+            "Interpreted languages cannot use loops",
+            "Compiled languages only run on web browsers",
+            "Interpreted languages do not have variables"
+          ],
+          "correct_answer": "Compiled languages are converted into machine code before execution; interpreted languages are executed line-by-line by an interpreter at runtime",
+          "explanation": "Compilers translate entire source code into native binary instructions ahead of time, whereas interpreters parse and execute code instructions dynamically during execution."
+        }
+      ]
+    },
+    {
+      "index": 54,
+      "id": 633795,
+      "title": "KC - Introduction to Python",
+      "category": "Programming & Python",
+      "summary": "Python features: high-level syntax, dynamic typing, indentation rules, built-in types (int, float, str, bool), and basic operations.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "How does Python delimit blocks of code such as functions, loops, and conditional statements?",
+          "options": [
+            "Indentation (whitespace)",
+            "Curly braces {}",
+            "BEGIN and END keywords",
+            "Semicolons ;"
+          ],
+          "correct_answer": "Indentation (whitespace)",
+          "explanation": "Python uses consistent indentation (standard 4 spaces) rather than curly braces or keywords to define code blocks and nesting scope."
+        }
+      ]
+    },
+    {
+      "index": 55,
+      "id": 633800,
+      "title": "KC - Introduction to Security",
+      "category": "Security & IAM",
+      "summary": "The CIA Triad (Confidentiality, Integrity, Availability), authentication vs. authorization, threat vectors, and defense-in-depth principles.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which pillar of the CIA Triad ensures that data has not been altered, tampered with, or corrupted in transit or storage?",
+          "options": [
+            "Integrity",
+            "Confidentiality",
+            "Availability",
+            "Authentication"
+          ],
+          "correct_answer": "Integrity",
+          "explanation": "Integrity guarantees the accuracy, completeness, and validity of data, typically verified using cryptographic hashing algorithms (SHA-256) and checksums."
+        }
+      ]
+    },
+    {
+      "index": 56,
+      "id": 633744,
+      "title": "KC - IP Subnetting",
+      "category": "Networking",
+      "summary": "CIDR notation (/24, /16), subnet masks, calculating network and broadcast addresses, available host counts, and AWS 5-reserved IPs per subnet.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In an Amazon VPC subnet with a CIDR block of /24 (256 total IP addresses), how many IP addresses are actually usable by EC2 instances?",
+          "options": [
+            "251",
+            "254",
+            "256",
+            "250"
+          ],
+          "correct_answer": "251",
+          "explanation": "AWS reserves the first 4 IP addresses (.0 Network, .1 VPC router, .2 DNS server, .3 Future use) and the last IP address (.255 Broadcast) in every subnet, leaving 251 usable host IPs in a /24."
+        }
+      ]
+    },
+    {
+      "index": 57,
+      "id": 633805,
+      "title": "KC - Linux Command Line",
+      "category": "Linux & Scripting",
+      "summary": "Navigating and managing Linux systems: pwd, ls, cd, cp, mv, rm, mkdir, touch, cat, less, grep, find, and piping commands.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which Linux command displays the current absolute path of your working directory?",
+          "options": [
+            "pwd (print working directory)",
+            "cd",
+            "ls",
+            "whereami"
+          ],
+          "correct_answer": "pwd (print working directory)",
+          "explanation": "`pwd` prints the full pathname of the current working directory to standard output."
+        }
+      ]
+    },
+    {
+      "index": 58,
+      "id": 633810,
+      "title": "KC - Managing File Permissions",
+      "category": "Linux & Scripting",
+      "summary": "Linux permissions (r=4, w=2, x=1), user/group/others, chmod (symbolic & octal), chown, chgrp, and umask.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which numeric chmod command grants the owner read, write, and execute permissions (7), and the group and others read-only permissions (4)?",
+          "options": [
+            "chmod 744 filename",
+            "chmod 755 filename",
+            "chmod 644 filename",
+            "chmod 777 filename"
+          ],
+          "correct_answer": "chmod 744 filename",
+          "explanation": "In octal permissions: Owner r+w+x = 4+2+1 = 7; Group r = 4; Others r = 4; resulting in `chmod 744`."
+        }
+      ]
+    },
+    {
+      "index": 59,
+      "id": 633815,
+      "title": "KC - Managing Log Files",
+      "category": "Linux & Scripting",
+      "summary": "System logging (/var/log/messages, /var/log/syslog, /var/log/auth.log), systemd journalctl, logrotate, and CloudWatch Logs Agent integration.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which Linux utility is used to automatically compress, rotate, and prune historical log files to prevent filling up the root storage partition?",
+          "options": [
+            "logrotate",
+            "journalctl",
+            "syslogd",
+            "rsyslog"
+          ],
+          "correct_answer": "logrotate",
+          "explanation": "`logrotate` is designed to ease administration of systems that generate large numbers of log files by automatically rotating, compressing, and mailing logs based on schedule or file size."
+        }
+      ]
+    },
+    {
+      "index": 60,
+      "id": 633820,
+      "title": "KC - Managing Processes",
+      "category": "Linux & Scripting",
+      "summary": "Process management: ps, top, htop, kill, kill -9 (SIGKILL), pkill, nice/renice, background jobs (&, bg, fg, jobs), and PID tracking.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which signal number is sent with `kill -9 <PID>` to forcefully and immediately terminate an unresponsive process in Linux?",
+          "options": [
+            "SIGKILL (Signal 9)",
+            "SIGTERM (Signal 15)",
+            "SIGHUP (Signal 1)",
+            "SIGSTOP (Signal 19)"
+          ],
+          "correct_answer": "SIGKILL (Signal 9)",
+          "explanation": "SIGKILL (signal 9) cannot be caught, blocked, or ignored by a process, causing the Linux kernel to immediately reclaim all resources and terminate the process."
+        }
+      ]
+    },
+    {
+      "index": 61,
+      "id": 633824,
+      "title": "KC - Managing Resource Consumption",
+      "category": "Cost & Optimization",
+      "summary": "Cost optimization, rightsizing EC2 instances, AWS Cost Anomaly Detection, Auto Scaling schedules, and S3 lifecycle transitions.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the recommended practice of matching instance types and sizes to your actual workload performance and capacity requirements called?",
+          "options": [
+            "Rightsizing",
+            "Over-provisioning",
+            "Hardening",
+            "Sharding"
+          ],
+          "correct_answer": "Rightsizing",
+          "explanation": "Rightsizing is the process of reviewing active resource utilization (CPU, memory, IOPS) and adjusting compute instances to the lowest-cost tier that meets workload SLAs."
+        }
+      ]
+    },
+    {
+      "index": 62,
+      "id": 633830,
+      "title": "KC - Managing Services",
+      "category": "Linux & Scripting",
+      "summary": "Managing Linux system daemons using systemd and systemctl: start, stop, restart, reload, enable, disable, and status.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which command ensures that the Nginx web server automatically starts upon system boot in modern Linux systems?",
+          "options": [
+            "sudo systemctl enable nginx",
+            "sudo systemctl start nginx",
+            "sudo service nginx run",
+            "sudo systemctl reload nginx"
+          ],
+          "correct_answer": "sudo systemctl enable nginx",
+          "explanation": "`systemctl enable` creates the necessary symbolic links in systemd target directories so the service starts automatically at boot."
+        }
+      ]
+    },
+    {
+      "index": 63,
+      "id": 633836,
+      "title": "KC - Modules and Libraries",
+      "category": "Programming & Python",
+      "summary": "Python module imports (`import`, `from ... import`), PyPI packages, pip package manager, virtual environments (`venv`), and SDKs (Boto3).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the official AWS SDK for Python used to create, configure, and manage AWS services programmatically?",
+          "options": [
+            "Boto3",
+            "PyAWS",
+            "AWSCLI-Python",
+            "SdkPy"
+          ],
+          "correct_answer": "Boto3",
+          "explanation": "Boto3 is the AWS Software Development Kit (SDK) for Python, allowing developers to write software that makes use of services like Amazon S3 and Amazon EC2."
+        }
+      ]
+    },
+    {
+      "index": 64,
+      "id": 633841,
+      "title": "KC - Monitoring and Security",
+      "category": "Security & Monitoring",
+      "summary": "Combining Amazon CloudWatch metrics, logs, alarms, AWS CloudTrail audits, and automated response actions.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which service collects raw operational metrics (CPU, disk I/O, network in/out) from EC2 instances every minute and can trigger automated alarms?",
+          "options": [
+            "Amazon CloudWatch",
+            "AWS CloudTrail",
+            "AWS Config",
+            "AWS Trusted Advisor"
+          ],
+          "correct_answer": "Amazon CloudWatch",
+          "explanation": "CloudWatch is the core monitoring and observability service that tracks metrics, sets alarms, visualizes logs, and triggers automated auto-scaling or SNS notifications."
+        }
+      ]
+    },
+    {
+      "index": 65,
+      "id": 633847,
+      "title": "KC - Network Hardening",
+      "category": "Security & Networking",
+      "summary": "Securing networks: closing unused ports, disabling root SSH password auth, deploying bastion hosts / Systems Manager Session Manager, and AWS WAF.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "How does AWS Systems Manager Session Manager improve EC2 instance security compared to traditional SSH bastion hosts?",
+          "options": [
+            "It allows shell access via IAM authentication without opening inbound port 22 or managing SSH keys",
+            "It encrypts only video files",
+            "It requires physical USB keys",
+            "It disables all network cards"
+          ],
+          "correct_answer": "It allows shell access via IAM authentication without opening inbound port 22 or managing SSH keys",
+          "explanation": "Session Manager uses an outbound agent connection via HTTPS (port 443) and IAM policies, completely eliminating the need to expose port 22 to the internet."
+        }
+      ]
+    },
+    {
+      "index": 66,
+      "id": 633853,
+      "title": "KC - Networking Concepts",
+      "category": "Networking",
+      "summary": "Bandwidth vs. throughput, latency, packet loss, DNS resolution, NAT, gateways, and switching fundamentals.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What term describes the time delay it takes for a data packet to travel from its source to its destination across a network?",
+          "options": [
+            "Latency",
+            "Bandwidth",
+            "Throughput",
+            "Jitter"
+          ],
+          "correct_answer": "Latency",
+          "explanation": "Latency is the round-trip or one-way delay (measured in milliseconds) incurred by packets navigating physical media, routers, and switches."
+        }
+      ]
+    },
+    {
+      "index": 67,
+      "id": 633859,
+      "title": "KC - Organizing Data",
+      "category": "Databases",
+      "summary": "SQL sorting (ORDER BY ASC/DESC), grouping (GROUP BY), filtering aggregated records (HAVING vs WHERE), and aggregation functions (COUNT, SUM, AVG).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In SQL, which clause filters results based on aggregated values produced by a GROUP BY clause?",
+          "options": [
+            "HAVING",
+            "WHERE",
+            "ORDER BY",
+            "FILTER"
+          ],
+          "correct_answer": "HAVING",
+          "explanation": "The `WHERE` clause filters individual rows before grouping, while the `HAVING` clause filters aggregated group results after grouping."
+        }
+      ]
+    },
+    {
+      "index": 68,
+      "id": 633865,
+      "title": "KC - Performing a Conditional Search",
+      "category": "Databases",
+      "summary": "SQL WHERE clauses with conditional operators (AND, OR, NOT, BETWEEN, IN, LIKE, IS NULL, wildcard patterns % and _).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which SQL operator searches for pattern matches using wildcard characters like `%` (matches any sequence of characters)?",
+          "options": [
+            "LIKE",
+            "EQUALS",
+            "CONTAINS",
+            "MATCH"
+          ],
+          "correct_answer": "LIKE",
+          "explanation": "The `LIKE` operator is used with `%` (zero or more characters) or `_` (single character) to perform pattern matching in text columns."
+        }
+      ]
+    },
+    {
+      "index": 69,
+      "id": 633871,
+      "title": "KC - Public Key Infrastructure",
+      "category": "Security & IAM",
+      "summary": "Asymmetric encryption (public/private key pairs), SSL/TLS certificates, Certificate Authorities (CAs), and AWS Certificate Manager (ACM).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS service provisions, manages, and automatically renews public SSL/TLS certificates for use with Elastic Load Balancers and CloudFront distributions?",
+          "options": [
+            "AWS Certificate Manager (ACM)",
+            "AWS KMS",
+            "AWS Secrets Manager",
+            "AWS Shield"
+          ],
+          "correct_answer": "AWS Certificate Manager (ACM)",
+          "explanation": "AWS Certificate Manager handles the complexity of provisioning, managing, and automatically renewing SSL/TLS certificates at no additional cost for supported services."
+        }
+      ]
+    },
+    {
+      "index": 70,
+      "id": 633876,
+      "title": "KC - Python Basics",
+      "category": "Programming & Python",
+      "summary": "Python syntax, primitive data types, lists, dictionaries, tuples, sets, string formatting (f-strings), and type conversion.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which built-in Python data structure stores ordered, mutable collections of elements enclosed in square brackets `[]`?",
+          "options": [
+            "List",
+            "Tuple",
+            "Dictionary",
+            "Set"
+          ],
+          "correct_answer": "List",
+          "explanation": "Python lists are ordered, mutable sequences that support indexing, slicing, appending, and item reassignment."
+        }
+      ]
+    },
+    {
+      "index": 71,
+      "id": 633881,
+      "title": "KC - Python for System Administration",
+      "category": "Programming & Python",
+      "summary": "Automating system tasks: standard library modules (`os`, `sys`, `subprocess`, `shutil`), file I/O, parsing JSON/CSV, and interacting with AWS via Boto3.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which standard Python module is used to spawn new processes, execute system shell commands, and capture their output streams?",
+          "options": [
+            "subprocess",
+            "os.system",
+            "sys",
+            "shutil"
+          ],
+          "correct_answer": "subprocess",
+          "explanation": "The `subprocess` module (`subprocess.run`, `Popen`) is the recommended standard way to invoke shell commands and handle stdin/stdout/stderr safely."
+        }
+      ]
+    },
+    {
+      "index": 72,
+      "id": 633888,
+      "title": "KC - Response",
+      "category": "Security & Monitoring",
+      "summary": "Incident response frameworks: preparation, identification, containment, eradication, recovery, and lessons learned with automated Lambda remediation.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the first step in building an automated security incident response workflow on AWS when GuardDuty detects a compromised EC2 instance?",
+          "options": [
+            "Trigger an EventBridge rule to execute an AWS Lambda function that isolates the instance by modifying its security group",
+            "Manually reformat the entire AWS account",
+            "Delete the VPC",
+            "Ignore the alert until business hours"
+          ],
+          "correct_answer": "Trigger an EventBridge rule to execute an AWS Lambda function that isolates the instance by modifying its security group",
+          "explanation": "Automated incident response pairs GuardDuty findings with Amazon EventBridge rules and Lambda functions to immediately isolate compromised hosts."
+        }
+      ]
+    },
+    {
+      "index": 73,
+      "id": 633893,
+      "title": "KC - Retrieving Data from Multiple Tables",
+      "category": "Databases",
+      "summary": "SQL Table Joins: INNER JOIN, LEFT (OUTER) JOIN, RIGHT JOIN, FULL OUTER JOIN, CROSS JOIN, and UNION operators.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which SQL JOIN returns all rows from the left table and the matched rows from the right table, filling with NULL when there is no match?",
+          "options": [
+            "LEFT JOIN (LEFT OUTER JOIN)",
+            "INNER JOIN",
+            "RIGHT JOIN",
+            "CROSS JOIN"
+          ],
+          "correct_answer": "LEFT JOIN (LEFT OUTER JOIN)",
+          "explanation": "A LEFT JOIN preserves every row from the primary (left) table regardless of whether matching records exist in the joined (right) table."
+        }
+      ]
+    },
+    {
+      "index": 74,
+      "id": 633899,
+      "title": "KC - Scaling and Name Resolution",
+      "category": "Cloud Architecture",
+      "summary": "Combines DNS routing (Route 53 latency/geolocation/failover routing) with dynamic auto-scaling and elastic load balancing across multi-region architectures.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which Amazon Route 53 routing policy routes internet traffic to the AWS region that provides the lowest network latency for the end user?",
+          "options": [
+            "Latency-based Routing",
+            "Geolocation Routing",
+            "Failover Routing",
+            "Weighted Routing"
+          ],
+          "correct_answer": "Latency-based Routing",
+          "explanation": "Latency routing directs user traffic to the AWS region hosting your application that provides the fastest round-trip response time."
+        }
+      ]
+    },
+    {
+      "index": 75,
+      "id": 633904,
+      "title": "KC - Scenario Test Strategy Practice",
+      "category": "Certification Prep",
+      "summary": "Strategies for answering multi-tier architecture scenario questions, trade-off optimization between RTO/RPO, cost, and operational complexity.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "When designing disaster recovery strategies, what does Recovery Time Objective (RTO) measure?",
+          "options": [
+            "The maximum acceptable duration of time between a service disruption and service restoration",
+            "The maximum acceptable amount of data loss measured in time",
+            "The financial cost of new hardware",
+            "The time required to write code"
+          ],
+          "correct_answer": "The maximum acceptable duration of time between a service disruption and service restoration",
+          "explanation": "RTO is the target timeframe within which a business process must be restored after a disaster. RPO (Recovery Point Objective) measures maximum acceptable data loss."
+        }
+      ]
+    },
+    {
+      "index": 76,
+      "id": 633909,
+      "title": "KC - Security Best Practices",
+      "category": "Security & IAM",
+      "summary": "Lock away AWS root user credentials, enable MFA on all privileged accounts, enforce least privilege, rotate keys, enable CloudTrail, and encrypt everywhere.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the primary security recommendation for the AWS root account after initial account creation?",
+          "options": [
+            "Enable Multi-Factor Authentication (MFA), lock away the root credentials, and use IAM users/roles for daily administration",
+            "Share the root password with all developers",
+            "Create access keys for the root account and embed them in code",
+            "Disable CloudTrail logging"
+          ],
+          "correct_answer": "Enable Multi-Factor Authentication (MFA), lock away the root credentials, and use IAM users/roles for daily administration",
+          "explanation": "The root user has unrestricted access to all resources. AWS best practice mandates enabling MFA, deleting access keys, and using dedicated IAM identities for administrative tasks."
+        }
+      ]
+    },
+    {
+      "index": 77,
+      "id": 633914,
+      "title": "KC - Security Lifecycle: Prevention",
+      "category": "Security & IAM",
+      "summary": "Preventive security controls: Security Groups, Network ACLs, IAM Permission Boundaries, AWS WAF rate limiting, and DDoS mitigation with AWS Shield.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS managed DDoS protection service provides automatic defense against common Layer 3 and Layer 4 attacks at no extra charge?",
+          "options": [
+            "AWS Shield Standard",
+            "AWS Shield Advanced",
+            "AWS WAF",
+            "AWS KMS"
+          ],
+          "correct_answer": "AWS Shield Standard",
+          "explanation": "AWS Shield Standard is automatically active for all AWS customers at no extra cost, defending against SYN floods, UDP reflection attacks, and network floods."
+        }
+      ]
+    },
+    {
+      "index": 78,
+      "id": 633919,
+      "title": "KC - Selecting Data from a Database",
+      "category": "Databases",
+      "summary": "SQL query syntax (SELECT, FROM, WHERE), column projection, aliases (AS), distinct values (DISTINCT), and result limits (LIMIT).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which SQL keyword eliminates duplicate rows from query results?",
+          "options": [
+            "DISTINCT",
+            "UNIQUE",
+            "FILTER",
+            "DIFFERENT"
+          ],
+          "correct_answer": "DISTINCT",
+          "explanation": "`SELECT DISTINCT column_name FROM table;` ensures that duplicate return values are removed and only unique values are returned."
+        }
+      ]
+    },
+    {
+      "index": 79,
+      "id": 633924,
+      "title": "KC - Serverless and Containers",
+      "category": "Compute",
+      "summary": "Docker container fundamentals, Amazon Elastic Container Service (ECS), Amazon Elastic Kubernetes Service (EKS), AWS Fargate, and AWS Lambda.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which serverless container compute engine runs Docker containers on ECS or EKS without requiring you to manage EC2 instances or cluster servers?",
+          "options": [
+            "AWS Fargate",
+            "Amazon EC2",
+            "AWS Batch",
+            "Amazon Lightsail"
+          ],
+          "correct_answer": "AWS Fargate",
+          "explanation": "AWS Fargate is a serverless compute engine for containers that removes the operational burden of provisioning, configuring, and scaling clusters of virtual machines."
+        }
+      ]
+    },
+    {
+      "index": 80,
+      "id": 633932,
+      "title": "KC - Servers",
+      "category": "Computing Fundamentals",
+      "summary": "Physical rack servers, blades, virtualization hypervisors, server roles (web, app, db, proxy), and high-density data center deployments.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the primary function of server virtualization software (a hypervisor)?",
+          "options": [
+            "Allow multiple isolated virtual machines (VMs) with independent operating systems to share the same physical hardware resources",
+            "Convert monitor signals to audio",
+            "Speed up internet cables",
+            "Prevent hard drives from spinning"
+          ],
+          "correct_answer": "Allow multiple isolated virtual machines (VMs) with independent operating systems to share the same physical hardware resources",
+          "explanation": "Hypervisors virtualize physical CPU, memory, storage, and networking, enabling efficient multi-tenant workload density on host hardware."
+        }
+      ]
+    },
+    {
+      "index": 81,
+      "id": 633937,
+      "title": "KC - Shared Responsibility Model",
+      "category": "Security & Compliance",
+      "summary": "AWS responsibility ('Security OF the Cloud' - hardware, data centers, global infrastructure) vs. Customer responsibility ('Security IN the Cloud' - data, OS patching on IaaS, IAM, firewall configs).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Under the AWS Shared Responsibility Model, which of the following is the customer's responsibility when running an Amazon EC2 instance?",
+          "options": [
+            "Operating system patching, security group firewall configuration, and application security",
+            "Physical security of the AWS data centers",
+            "Maintaining physical server hardware and disk disposal",
+            "Hypervisor patching"
+          ],
+          "correct_answer": "Operating system patching, security group firewall configuration, and application security",
+          "explanation": "AWS manages physical facilities, hardware, and hypervisors ('Security OF the Cloud'). Customers manage guest OS updates, firewall rules, network traffic configuration, IAM, and their own data ('Security IN the Cloud')."
+        }
+      ]
+    },
+    {
+      "index": 82,
+      "id": 633942,
+      "title": "KC - Software Management",
+      "category": "Linux & Scripting",
+      "summary": "Linux package managers (yum/dnf on Amazon Linux/RHEL, apt on Ubuntu/Debian), repositories, installing, updating, and removing packages.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which package management command updates all installed packages to their latest versions on Amazon Linux 2023 / Fedora systems?",
+          "options": [
+            "sudo dnf update (or yum update)",
+            "sudo apt-get upgrade",
+            "npm update",
+            "pip install --upgrade"
+          ],
+          "correct_answer": "sudo dnf update (or yum update)",
+          "explanation": "`dnf update` queries configured RPM package repositories, resolves dependencies, and upgrades all system packages to the latest available releases."
+        }
+      ]
+    },
+    {
+      "index": 83,
+      "id": 633952,
+      "title": "KC - Storage",
+      "category": "Storage",
+      "summary": "Comparing block storage (Amazon EBS), object storage (Amazon S3), and file storage (Amazon EFS, Amazon FSx).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS storage service provides a fully managed, POSIX-compliant shared file system that can be concurrently mounted by hundreds of EC2 Linux instances across multiple AZs?",
+          "options": [
+            "Amazon Elastic File System (EFS)",
+            "Amazon Elastic Block Store (EBS)",
+            "Amazon S3",
+            "Instance Store"
+          ],
+          "correct_answer": "Amazon Elastic File System (EFS)",
+          "explanation": "Amazon EFS provides serverless, scalable elastic file storage using the NFS protocol that can be attached concurrently across multiple compute instances in different AZs."
+        }
+      ]
+    },
+    {
+      "index": 84,
+      "id": 633962,
+      "title": "KC - Storage and Archiving",
+      "category": "Storage",
+      "summary": "Deep long-term archiving: Amazon S3 Glacier Flexible Retrieval, S3 Glacier Deep Archive, vault locks, and compliance retention.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which Amazon S3 storage class provides the lowest-cost storage for long-term data archiving with retrieval times between 12 and 48 hours?",
+          "options": [
+            "S3 Glacier Deep Archive",
+            "S3 Standard",
+            "S3 One Zone-IA",
+            "S3 Glacier Instant Retrieval"
+          ],
+          "correct_answer": "S3 Glacier Deep Archive",
+          "explanation": "S3 Glacier Deep Archive is AWS's lowest-cost storage tier, designed for long-term retention of compliance and archival records accessed once or twice a year."
+        }
+      ]
+    },
+    {
+      "index": 85,
+      "id": 633967,
+      "title": "KC - System Operations",
+      "category": "Cloud Architecture",
+      "summary": "Operational excellence, automated patching, health monitoring, backup schedules, incident runbooks, and disaster recovery execution.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which managed service enables you to automate operational tasks, run remote shell commands across thousands of EC2 instances, and schedule patch compliance scans?",
+          "options": [
+            "AWS Systems Manager",
+            "AWS CloudTrail",
+            "Amazon Route 53",
+            "Amazon CloudFront"
+          ],
+          "correct_answer": "AWS Systems Manager",
+          "explanation": "AWS Systems Manager gives you visibility and control of your AWS and on-premises infrastructure via Run Command, Patch Manager, and Maintenance Windows."
+        }
+      ]
+    },
+    {
+      "index": 86,
+      "id": 633972,
+      "title": "KC - Systems Hardening",
+      "category": "Security & Linux",
+      "summary": "OS security baselines: disabling root login, removing unneeded packages/services, configuring UFW/iptables, file integrity checks, and CIS benchmarks.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Why is disabling remote root SSH logins in `/etc/ssh/sshd_config` considered a fundamental system hardening practice?",
+          "options": [
+            "It forces administrators to authenticate with distinct individual named user accounts before elevating privileges with sudo, ensuring audit accountability",
+            "It reduces RAM consumption by 50%",
+            "It makes the hard drive run cooler",
+            "It speeds up network packet delivery"
+          ],
+          "correct_answer": "It forces administrators to authenticate with distinct individual named user accounts before elevating privileges with sudo, ensuring audit accountability",
+          "explanation": "Disabling direct root logins prevents brute-force root dictionary attacks and enforces non-repudiation by logging the exact individual user identity executing privileged commands via sudo."
+        }
+      ]
+    },
+    {
+      "index": 87,
+      "id": 633976,
+      "title": "KC - The Bash Shell",
+      "category": "Linux & Scripting",
+      "summary": "Interactive shell environments, environment variables (PATH, HOME, USER), aliases, shell history, I/O redirection (>, >>, <, 2>&1), and pipes (|).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which operator appends standard output to the end of an existing file without overwriting its contents?",
+          "options": [
+            ">>",
+            ">",
+            "<",
+            "|"
+          ],
+          "correct_answer": ">> (Double redirect)",
+          "explanation": "`>>` appends stdout to the target file, preserving existing content, while `>` overwrites the destination file from the beginning."
+        }
+      ]
+    },
+    {
+      "index": 88,
+      "id": 633981,
+      "title": "KC - Tooling and Automation",
+      "category": "DevOps & Automation",
+      "summary": "Command Line Interface (AWS CLI), SDKs, CloudFormation, SAM (Serverless Application Model), and automating administrative workflows.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which command-line tool enables engineers to control and automate AWS services directly from terminal scripts and CI/CD pipelines?",
+          "options": [
+            "AWS CLI",
+            "AWS Management Console",
+            "PuTTY",
+            "Vim"
+          ],
+          "correct_answer": "AWS CLI",
+          "explanation": "The AWS Command Line Interface (AWS CLI) is a unified tool to manage your AWS services via scriptable commands."
+        }
+      ]
+    },
+    {
+      "index": 89,
+      "id": 633986,
+      "title": "KC - Trusted Advisor",
+      "category": "Cost & Optimization",
+      "summary": "Analyzes AWS accounts across 5 categories: Cost Optimization, Performance, Security, Fault Tolerance, and Service Limits.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which AWS tool provides real-time guidance and actionable recommendations to help you follow AWS best practices across Cost, Security, Fault Tolerance, Performance, and Service Quotas?",
+          "options": [
+            "AWS Trusted Advisor",
+            "AWS Inspector",
+            "AWS CloudTrail",
+            "Amazon Athena"
+          ],
+          "correct_answer": "AWS Trusted Advisor",
+          "explanation": "AWS Trusted Advisor inspects your environment and makes recommendations to save money, close security gaps, improve performance, and maintain high availability."
+        }
+      ]
+    },
+    {
+      "index": 90,
+      "id": 633990,
+      "title": "KC - Users and Groups",
+      "category": "Linux & Scripting",
+      "summary": "Linux user administration: /etc/passwd, /etc/shadow, /etc/group, useradd, usermod, userdel, groupadd, and sudoers configuration.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which file stores encrypted user passwords and password expiration policies in Linux with restricted root-only read permissions?",
+          "options": [
+            "/etc/shadow",
+            "/etc/passwd",
+            "/etc/group",
+            "/etc/security"
+          ],
+          "correct_answer": "/etc/shadow",
+          "explanation": "While `/etc/passwd` stores general user account attributes and is world-readable, sensitive cryptographic password hashes are isolated in `/etc/shadow` accessible only by root."
+        }
+      ]
+    },
+    {
+      "index": 91,
+      "id": 633995,
+      "title": "KC - What is Amazon Web Services?",
+      "category": "Cloud Foundations",
+      "summary": "Overview of AWS as the world's most comprehensive and broadly adopted cloud platform, global data center footprint, continuous innovation, and customer ecosystem.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is Amazon Web Services (AWS)?",
+          "options": [
+            "A comprehensive cloud platform offering over 200 fully featured services from data centers globally",
+            "An online retail bookstore only",
+            "An internet service provider selling fiber cables",
+            "A single physical server in Seattle"
+          ],
+          "correct_answer": "A comprehensive cloud platform offering over 200 fully featured services from data centers globally",
+          "explanation": "AWS provides on-demand infrastructure, database, compute, networking, security, machine learning, and application services to millions of customers worldwide."
+        }
+      ]
+    },
+    {
+      "index": 92,
+      "id": 634000,
+      "title": "KC - What is Cloud Computing?",
+      "category": "Cloud Foundations",
+      "summary": "Core definitions of cloud computing, elasticity, agility, resource pooling, broad network access, measured service, and modern IT delivery.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the key difference between traditional IT procurement and cloud computing elasticity?",
+          "options": [
+            "Cloud elasticity allows resources to dynamically expand and shrink in response to real-time traffic demand, avoiding both over-provisioning and capacity shortages",
+            "Traditional IT hardware scales automatically every second",
+            "Cloud computing requires purchasing all servers upfront",
+            "Cloud computing only works during business hours"
+          ],
+          "correct_answer": "Cloud elasticity allows resources to dynamically expand and shrink in response to real-time traffic demand, avoiding both over-provisioning and capacity shortages",
+          "explanation": "Elasticity allows systems to seamlessly scale compute and storage up when demand spikes and scale down when traffic subsides, optimizing costs and performance."
+        }
+      ]
+    },
+    {
+      "index": 93,
+      "id": 634005,
+      "title": "KC - Working with Commands",
+      "category": "Linux & Scripting",
+      "summary": "Linux command syntax: command name, options/flags (-a, -l), arguments, man pages, built-ins vs external binaries, which/type commands.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which command displays the built-in manual documentation page for any command-line tool in Linux?",
+          "options": [
+            "man <command>",
+            "help <command>",
+            "info",
+            "doc <command>"
+          ],
+          "correct_answer": "man <command>",
+          "explanation": "The `man` command formats and displays the online manual pages, detailing command syntax, available options, and return codes."
+        }
+      ]
+    },
+    {
+      "index": 94,
+      "id": 634010,
+      "title": "KC - Working with Files",
+      "category": "Linux & Scripting",
+      "summary": "File operations in Linux: creating (touch), viewing (cat, head, tail), copying (cp), moving/renaming (mv), removing (rm), and searching (grep).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "Which Linux command outputs the last 10 lines of a log file and can dynamically follow new incoming log entries in real-time with `-f`?",
+          "options": [
+            "tail -f <file>",
+            "head <file>",
+            "cat <file>",
+            "less <file>"
+          ],
+          "correct_answer": "tail -f <file>",
+          "explanation": "`tail -f` continuously outputs appended data as the file grows, making it essential for real-time log monitoring and troubleshooting."
+        }
+      ]
+    },
+    {
+      "index": 95,
+      "id": 634014,
+      "title": "KC - Working with Functions",
+      "category": "Programming & Python",
+      "summary": "Writing clean, reusable modular functions, parameter passing, return statements, docstrings, type hinting, and unit testable code.",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "What is the primary benefit of decomposing complex software applications into modular functions?",
+          "options": [
+            "Code reusability, improved readability, easier debugging, and simplified unit testing",
+            "It forces the CPU to use less electricity",
+            "It eliminates the need for variable names",
+            "It makes code proprietary"
+          ],
+          "correct_answer": "Code reusability, improved readability, easier debugging, and simplified unit testing",
+          "explanation": "Functions encapsulate isolated logic, enabling developers to write clean, reusable, testable, and maintainable software architectures."
+        }
+      ]
+    },
+    {
+      "index": 96,
+      "id": 634017,
+      "title": "KC - Working with the File System",
+      "category": "Linux & Scripting",
+      "summary": "Linux File System Hierarchy Standard (FHS): /, /bin, /etc, /var, /home, /dev, /tmp, /opt, /usr, mounting devices (mount/umount), and disk usage (df, du).",
+      "questions": [
+        {
+          "question_number": 1,
+          "question": "In the standard Linux Filesystem Hierarchy (FHS), which directory contains system-wide configuration files?",
+          "options": [
+            "/etc",
+            "/bin",
+            "/var",
+            "/tmp"
+          ],
+          "correct_answer": "/etc",
+          "explanation": "The `/etc` directory holds all core system configuration files, network settings, service configurations, and initialization scripts."
+        }
+      ]
+    }
+  ]
+}

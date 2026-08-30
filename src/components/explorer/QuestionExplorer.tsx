@@ -1,0 +1,208 @@
+import React, { useState, useMemo } from 'react';
+import { Search, Compass, Play, ChevronDown, ChevronUp, CheckCircle2, BookOpen, Layers } from 'lucide-react';
+import { ALL_QUESTIONS, ALL_CATEGORIES } from '../../data/quizData';
+import { CategoryIcon } from '../common/CategoryIcon';
+import { useQuiz } from '../../context/QuizContext';
+
+export const QuestionExplorer: React.FC = () => {
+  const { startKnowledgeCheck } = useQuiz();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const filteredQuestions = useMemo(() => {
+    const clean = searchTerm.trim().toLowerCase();
+    return ALL_QUESTIONS.filter((q) => {
+      if (selectedCategory !== 'ALL' && q.category !== selectedCategory) return false;
+      if (!clean) return true;
+      return (
+        q.question.toLowerCase().includes(clean) ||
+        q.kcTitle.toLowerCase().includes(clean) ||
+        q.category.toLowerCase().includes(clean) ||
+        q.explanation.toLowerCase().includes(clean) ||
+        q.options.some((opt) => opt.toLowerCase().includes(clean))
+      );
+    });
+  }, [searchTerm, selectedCategory]);
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-6 pb-16">
+      {/* Top Banner */}
+      <div className="space-y-1">
+        <h1 className="text-xl sm:text-2xl font-display font-extrabold text-slate-900 flex items-center gap-2">
+          <Compass className="w-5 h-5 text-slate-700" />
+          Curriculum & Question Bank
+        </h1>
+        <p className="text-xs text-slate-500">
+          Browse and search through all 103 questions and detailed solutions
+        </p>
+      </div>
+
+      {/* Search & Category Filter bar */}
+      <div className="space-y-2.5">
+        <div className="relative w-full">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search keywords, services (e.g. S3, IAM, VPC, EC2, CloudTrail, Linux)..."
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors shadow-sm"
+          />
+        </div>
+
+        {/* Category Horizontal Scroll Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
+          <button
+            onClick={() => setSelectedCategory('ALL')}
+            className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+              selectedCategory === 'ALL'
+                ? 'bg-slate-900 text-white shadow-sm'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
+            }`}
+          >
+            All ({ALL_QUESTIONS.length})
+          </button>
+          {ALL_CATEGORIES.map((cat) => (
+            <button
+              key={cat.name}
+              onClick={() => setSelectedCategory(cat.name)}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                selectedCategory === cat.name
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
+              }`}
+            >
+              <CategoryIcon category={cat.name} className="w-3 h-3" />
+              <span>{cat.name}</span>
+              <span className="font-mono opacity-60">({cat.count})</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Questions List */}
+      <div className="space-y-2.5">
+        <div className="text-xs font-mono text-slate-500">
+          Showing {filteredQuestions.length} Questions
+        </div>
+
+        {filteredQuestions.map((q, idx) => {
+          const isExpanded = expandedId === q.id;
+          return (
+            <div
+              key={q.id}
+              className="rounded-xl bg-white border border-slate-200/90 overflow-hidden shadow-subtle hover:border-slate-300 transition-all"
+            >
+              {/* Question Header */}
+              <div
+                onClick={() => setExpandedId(isExpanded ? null : q.id)}
+                className="w-full p-4 text-left flex items-start justify-between gap-4 cursor-pointer hover:bg-slate-50 transition-colors"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono text-slate-400">#{idx + 1}</span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-mono text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200">
+                      <CategoryIcon category={q.category} className="w-3 h-3 text-slate-500" />
+                      {q.category}
+                    </span>
+                    <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
+                      {q.kcTitle}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm font-medium text-slate-900 leading-snug">
+                    {q.question}
+                  </h3>
+                </div>
+
+                <div className="shrink-0 text-slate-400 mt-1">
+                  {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </div>
+              </div>
+
+              {/* Expanded Question Content */}
+              {isExpanded && (
+                <div className="px-5 pb-5 pt-1 border-t border-slate-100 space-y-3.5 text-xs bg-slate-50/50">
+                  {/* Options display */}
+                  <div className="space-y-1.5 pt-2">
+                    <span className="font-mono text-[11px] text-slate-500 block font-semibold uppercase">
+                      Answer Choices:
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {q.options.map((opt, oIdx) => {
+                        const isCorrect = opt === q.correctAnswer;
+                        return (
+                          <div
+                            key={oIdx}
+                            className={`p-2.5 rounded-lg border flex items-start gap-2 ${
+                              isCorrect
+                                ? 'bg-emerald-50 border-emerald-300 text-emerald-950 font-medium'
+                                : 'bg-white border-slate-200 text-slate-700'
+                            }`}
+                          >
+                            <span
+                              className={`w-5 h-5 rounded flex items-center justify-center font-mono text-[10px] shrink-0 ${
+                                isCorrect
+                                  ? 'bg-emerald-600 text-white font-bold'
+                                  : 'bg-slate-100 text-slate-600'
+                              }`}
+                            >
+                              {String.fromCharCode(65 + oIdx)}
+                            </span>
+                            <span className="leading-relaxed">{opt}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Explanation card */}
+                  <div className="p-3.5 rounded-lg bg-white border border-slate-200 space-y-1 leading-relaxed text-slate-700">
+                    <div className="font-mono font-bold text-slate-800 uppercase text-[11px] flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      Concept Explanation:
+                    </div>
+                    <p>{q.explanation}</p>
+                  </div>
+
+                  {/* KC Footer info & Action button */}
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="text-slate-500 flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{q.kcTitle}</span>
+                    </div>
+
+                    <button
+                      onClick={() => startKnowledgeCheck(q.kcId, true)}
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-all shadow-sm"
+                    >
+                      <Play className="w-3 h-3 fill-current" />
+                      Practice KC
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {filteredQuestions.length === 0 && (
+          <div className="py-12 text-center rounded-xl bg-white border border-slate-200">
+            <Layers className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+            <p className="text-sm font-medium text-slate-600">No questions matched your search query</p>
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('ALL');
+              }}
+              className="mt-2 text-xs text-slate-800 font-semibold hover:underline"
+            >
+              Clear filters
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
