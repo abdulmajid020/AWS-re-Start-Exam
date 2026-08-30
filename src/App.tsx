@@ -10,9 +10,10 @@ import { ResultsView } from './components/results/ResultsView';
 import { QuestionExplorer } from './components/explorer/QuestionExplorer';
 import { KeyboardShortcutsModal } from './components/common/KeyboardShortcutsModal';
 import { ConfirmSubmitModal } from './components/common/ConfirmSubmitModal';
+import { SupportModal } from './components/common/SupportModal';
 
 const AppContent: React.FC = () => {
-  const { currentView } = useQuiz();
+  const { currentView, supportModalOpen, setSupportModalOpen } = useQuiz();
   useKeyboardShortcuts();
 
   return (
@@ -35,6 +36,7 @@ const AppContent: React.FC = () => {
       {/* Global Modals */}
       <KeyboardShortcutsModal />
       <ConfirmSubmitModal />
+      <SupportModal isOpen={supportModalOpen} onClose={() => setSupportModalOpen(false)} />
     </div>
   );
 };

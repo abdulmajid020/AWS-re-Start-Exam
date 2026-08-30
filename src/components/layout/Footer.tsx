@@ -1,7 +1,11 @@
 import React from 'react';
 import { COURSE_INFO, ALL_QUESTIONS, ALL_KNOWLEDGE_CHECKS } from '../../data/quizData';
+import { Coffee } from 'lucide-react';
+import { useQuiz } from '../../context/QuizContext';
 
 export const Footer: React.FC = () => {
+  const { setSupportModalOpen } = useQuiz();
+
   return (
     <footer className="border-t border-slate-200 bg-white py-8 mt-16 text-slate-500 text-xs">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -18,6 +22,16 @@ export const Footer: React.FC = () => {
             <span>{ALL_QUESTIONS.length} Questions</span>
             <span>•</span>
             <span>CLF-C02 Standard</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSupportModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 font-medium transition-colors"
+            >
+              <Coffee className="w-3.5 h-3.5 text-amber-700" />
+              <span>Buy Me a Coffee</span>
+            </button>
           </div>
         </div>
       </div>

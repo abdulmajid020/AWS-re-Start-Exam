@@ -64,6 +64,8 @@ interface QuizContextType {
   setConfirmSubmitModalOpen: (open: boolean) => void;
   navigatorDrawerOpen: boolean;
   setNavigatorDrawerOpen: (open: boolean) => void;
+  supportModalOpen: boolean;
+  setSupportModalOpen: (open: boolean) => void;
 
   // Theme & Preferences
   theme: 'dark' | 'light';
@@ -109,6 +111,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
   const [confirmSubmitModalOpen, setConfirmSubmitModalOpen] = useState(false);
   const [navigatorDrawerOpen, setNavigatorDrawerOpen] = useState(false);
+  const [supportModalOpen, setSupportModalOpen] = useState(false);
 
   // Theme & Sound
   const [theme, setTheme] = useState<'dark' | 'light'>('light');
@@ -709,6 +712,8 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setConfirmSubmitModalOpen,
         navigatorDrawerOpen,
         setNavigatorDrawerOpen,
+        supportModalOpen,
+        setSupportModalOpen,
         theme,
         toggleTheme,
         soundEnabled,

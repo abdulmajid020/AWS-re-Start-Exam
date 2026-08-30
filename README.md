@@ -13,8 +13,15 @@ A minimalist, high-performance **React + TypeScript + Tailwind CSS** assessment 
 - **Question Bank Explorer**: Searchable directory across all 103 questions, answer choices, and conceptual solutions.
 - **Keyboard Shortcuts**: Complete hands-on navigation (`1–4`, `A–D`, `→/←`, `F`, `M`, `Space`, `?`).
 - **Typography**: Paired with Google Fonts *Plus Jakarta Sans* and *Maven Pro*.
+- **Support & Sponsorship**: Integrated [Buy Me a Coffee](https://buymeacoffee.com/projectelon).
 
 ---
+
+## ☕ Support
+
+If you find this quiz app and exam simulator helpful for your AWS certification journey, consider supporting the project:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-projectelon-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/projectelon)
 
 ## 🚀 Quick Start
 

@@ -10,12 +10,13 @@ import {
   ChevronDown,
   ChevronUp,
   Layers,
+  Coffee,
 } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
 import { CategoryIcon } from '../common/CategoryIcon';
 
 export const ResultsView: React.FC = () => {
-  const { lastResult, retakeCurrentQuiz, setCurrentView } = useQuiz();
+  const { lastResult, retakeCurrentQuiz, setCurrentView, setSupportModalOpen } = useQuiz();
   const [filter, setFilter] = useState<'ALL' | 'INCORRECT' | 'FLAGGED' | 'CORRECT'>('ALL');
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -198,6 +199,31 @@ export const ResultsView: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Support / Sponsor Banner on Results Screen */}
+      <div className="rounded-2xl bg-amber-50/70 border border-amber-200 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-white border border-amber-200 text-amber-700 shrink-0">
+            <Coffee className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-display font-bold text-slate-900">
+              Found this test helpful for your AWS certification?
+            </h4>
+            <p className="text-xs text-slate-600">
+              Support this open-source tool with a coffee or share it with other AWS re/Start students!
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setSupportModalOpen(true)}
+          className="shrink-0 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-display font-semibold text-xs transition-all shadow-sm flex items-center gap-1.5"
+        >
+          <Coffee className="w-3.5 h-3.5" />
+          <span>Support Project</span>
+        </button>
+      </div>
 
       {/* Question Review Section */}
       <div className="space-y-3">

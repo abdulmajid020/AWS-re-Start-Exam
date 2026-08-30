@@ -7,6 +7,7 @@ import {
   BookOpen,
   CheckCircle2,
   Bookmark,
+  Coffee,
 } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
 
@@ -15,6 +16,7 @@ export const Navbar: React.FC = () => {
     currentView,
     setCurrentView,
     setShortcutsModalOpen,
+    setSupportModalOpen,
     session,
     stats,
   } = useQuiz();
@@ -105,6 +107,16 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
           )}
+
+          {/* Support / Buy Me a Coffee button */}
+          <button
+            onClick={() => setSupportModalOpen(true)}
+            title="Support this project"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold transition-colors"
+          >
+            <Coffee className="w-3.5 h-3.5 text-amber-700" />
+            <span className="hidden sm:inline">Support</span>
+          </button>
 
           <button
             onClick={() => setShortcutsModalOpen(true)}
