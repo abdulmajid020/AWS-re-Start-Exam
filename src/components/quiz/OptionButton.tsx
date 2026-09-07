@@ -1,11 +1,14 @@
 import React from 'react';
-import { CheckCircle2, XCircle, Circle } from 'lucide-react';
+import { CheckCircle2, XCircle, Circle, Square, CheckSquare } from 'lucide-react';
 
 interface OptionButtonProps {
   option: string;
   index: number;
   selectedOption: string | null;
+  selectedOptions?: string[];
   correctAnswer: string;
+  correctAnswers?: string[];
+  isMultiSelect?: boolean;
   instantFeedback: boolean;
   onSelect: (opt: string) => void;
   disabled?: boolean;
@@ -15,7 +18,10 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
   option,
   index,
   selectedOption,
+  selectedOptions = [],
   correctAnswer,
+  correctAnswers = [],
+  isMultiSelect = false,
   instantFeedback,
   onSelect,
   disabled = false,
@@ -24,20 +30,32 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
   const letter = letters[index] || String(index + 1);
   const keyNumber = index + 1;
 
-  const isSelected = selectedOption === option;
-  const isCorrect = option === correctAnswer;
-  const hasAnswered = selectedOption !== null;
+  const isSelected = isMultiSelect
+    ? selectedOptions.includes(option)
+    : selectedOption === option;
+
+  const targetAnswers = correctAnswers.length > 0 ? correctAnswers : [correctAnswer];
+  const isCorrect = targetAnswers.includes(option);
+  const hasAnswered = isMultiSelect ? selectedOptions.length > 0 : selectedOption !== null;
 
   let containerStyles =
     'bg-white hover:bg-slate-50 border-slate-200 text-slate-800 hover:border-slate-300 shadow-subtle';
   let badgeStyles = 'bg-slate-100 text-slate-700 border-slate-200';
-  let icon = <Circle className="w-4 h-4 text-slate-300 shrink-0" />;
+  let icon = isMultiSelect ? (
+    <Square className="w-4 h-4 text-slate-300 shrink-0" />
+  ) : (
+    <Circle className="w-4 h-4 text-slate-300 shrink-0" />
+  );
 
   if (instantFeedback && hasAnswered) {
     if (isCorrect) {
       containerStyles = 'bg-emerald-50/80 border-emerald-500 text-emerald-950 shadow-sm';
       badgeStyles = 'bg-emerald-600 text-white font-bold border-emerald-600';
-      icon = <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />;
+      icon = isMultiSelect ? (
+        <CheckSquare className="w-5 h-5 text-emerald-600 shrink-0" />
+      ) : (
+        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+      );
     } else if (isSelected && !isCorrect) {
       containerStyles = 'bg-rose-50/80 border-rose-500 text-rose-950 shadow-sm';
       badgeStyles = 'bg-rose-600 text-white font-bold border-rose-600';
@@ -50,13 +68,17 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
     containerStyles =
       'bg-slate-900 border-slate-900 text-white shadow-sm font-medium';
     badgeStyles = 'bg-slate-800 text-white font-bold border-slate-700';
-    icon = <CheckCircle2 className="w-5 h-5 text-white shrink-0" />;
+    icon = isMultiSelect ? (
+      <CheckSquare className="w-5 h-5 text-white shrink-0" />
+    ) : (
+      <CheckCircle2 className="w-5 h-5 text-white shrink-0" />
+    );
   }
 
   return (
     <button
       onClick={() => onSelect(option)}
-      disabled={disabled || (instantFeedback && hasAnswered)}
+      disabled={disabled || (instantFeedback && hasAnswered && !isMultiSelect)}
       className={`w-full group relative flex items-center justify-between p-4 rounded-xl border text-left text-sm transition-all duration-150 active:scale-[0.995] ${containerStyles}`}
     >
       <div className="flex items-center gap-3.5 pr-2">
@@ -70,11 +92,13 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
 
       <div className="flex items-center gap-2 shrink-0">
         {icon}
-        <kbd className={`hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.5 rounded border ${
-          isSelected && !instantFeedback
-            ? 'bg-slate-800 text-slate-300 border-slate-700'
-            : 'bg-slate-50 text-slate-400 border-slate-200'
-        }`}>
+        <kbd
+          className={`hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.5 rounded border ${
+            isSelected && !instantFeedback
+              ? 'bg-slate-800 text-slate-300 border-slate-700'
+              : 'bg-slate-50 text-slate-400 border-slate-200'
+          }`}
+        >
           {keyNumber}
         </kbd>
       </div>

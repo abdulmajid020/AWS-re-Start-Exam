@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Keyboard,
-  Compass,
-  Layers,
-  Home,
-  BookOpen,
-  CheckCircle2,
-  Bookmark,
-  Coffee,
-} from 'lucide-react';
+import { Keyboard, Compass, Layers, Home, BookOpen, CheckCircle2, Bookmark, Coffee } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
 
 export const Navbar: React.FC = () => {
@@ -41,9 +32,12 @@ export const Navbar: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-display font-bold text-slate-900 tracking-tight">
-                  AWS re/Start
+                  AWS Quiz Hub
                 </span>
-                <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200 font-bold">
+                  CCP 400
+                </span>
+                <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 hidden sm:inline">
                   CLF-C02
                 </span>
               </div>
@@ -75,7 +69,7 @@ export const Navbar: React.FC = () => {
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
-              Question Bank
+              Question Bank (503Q)
             </button>
 
             <button

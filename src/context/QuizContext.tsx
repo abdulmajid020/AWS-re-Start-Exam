@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import {
   FormattedQuestion,
   GlobalUserStats,
+  QuestionBankId,
   QuizMode,
   QuizResultReport,
   QuizSession,
@@ -9,11 +10,11 @@ import {
   UserAnswerState,
 } from '../types/quiz';
 import {
-  ALL_QUESTIONS,
   getExamQuestions,
   getQuestionsByCategory,
   getQuestionsByKC,
   getQuestionsByIds,
+  getQuestionsByBank,
   shuffleArray,
 } from '../data/quizData';
 import { soundFx } from '../utils/soundEffects';
@@ -29,14 +30,18 @@ interface QuizContextType {
   currentAnswer: UserAnswerState | null;
   lastResult: QuizResultReport | null;
 
+  // Selected Bank Preference
+  activeBank: QuestionBankId;
+  setActiveBank: (bank: QuestionBankId) => void;
+
   // Quiz Actions
-  startExamSimulation: (count?: number, timeMins?: number) => void;
+  startExamSimulation: (count?: number, timeMins?: number, bankId?: QuestionBankId) => void;
   startKnowledgeCheck: (kcId: number, instantFeedback?: boolean) => void;
-  startCategoryPractice: (category: string, instantFeedback?: boolean) => void;
+  startCategoryPractice: (category: string, instantFeedback?: boolean, bankId?: QuestionBankId) => void;
   startWeakAreas: () => void;
   startFlaggedReview: () => void;
   startCustomQuiz: (settings: Partial<QuizSettings>, title?: string) => void;
-  startFlashcards: (questions?: FormattedQuestion[]) => void;
+  startFlashcards: (questions?: FormattedQuestion[], bankId?: QuestionBankId) => void;
   retakeCurrentQuiz: (onlyIncorrect?: boolean) => void;
 
   // Question Actions
@@ -78,9 +83,10 @@ interface QuizContextType {
   clearStats: () => void;
 }
 
-const STORAGE_KEY_STATS = 'aws_quiz_stats_v1';
+const STORAGE_KEY_STATS = 'aws_quiz_stats_v2';
 const STORAGE_KEY_THEME = 'aws_quiz_theme_v1';
 const STORAGE_KEY_SOUND = 'aws_quiz_sound_v1';
+const STORAGE_KEY_BANK = 'aws_quiz_bank_v1';
 
 const DEFAULT_STATS: GlobalUserStats = {
   totalQuizzesTaken: 0,
@@ -97,6 +103,15 @@ const QuizContext = createContext<QuizContextType | undefined>(undefined);
 export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // View State
   const [currentView, setCurrentView] = useState<'home' | 'quiz' | 'flashcards' | 'results' | 'explorer'>('home');
+
+  // Bank Filter
+  const [activeBank, setActiveBank] = useState<QuestionBankId>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEY_BANK);
+      if (saved === 'all' || saved === 'ccp400' || saved === 'restart_kcs') return saved;
+    }
+    return 'all';
+  });
 
   // Quiz Session State
   const [session, setSession] = useState<QuizSession | null>(null);
@@ -136,6 +151,11 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     return DEFAULT_STATS;
   });
+
+  // Keep bank preference in sync
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY_BANK, activeBank);
+  }, [activeBank]);
 
   // Keep soundFx preference in sync
   useEffect(() => {
@@ -195,6 +215,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
         initialAnswers[q.id] = {
           questionId: q.id,
           selectedOption: null,
+          selectedOptions: [],
           isCorrect: null,
           flagged: stats.flaggedQuestionIds.includes(q.id),
           timeSpentSeconds: 0,
@@ -235,24 +256,41 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       clearInterval(timerIntervalRef.current);
     }
 
-    const elapsedSeconds = session.settings.timeLimitMinutes && session.timeRemainingSeconds !== null
-      ? session.settings.timeLimitMinutes * 60 - session.timeRemainingSeconds
-      : Math.round((Date.now() - session.startTime) / 1000);
+    const elapsedSeconds =
+      session.settings.timeLimitMinutes && session.timeRemainingSeconds !== null
+        ? session.settings.timeLimitMinutes * 60 - session.timeRemainingSeconds
+        : Math.round((Date.now() - session.startTime) / 1000);
 
     const questionResults = session.questions.map((q) => {
       const ans = session.answers[q.id];
       const selected = ans?.selectedOption || null;
-      const isCorrect = selected === q.correctAnswer;
+      const selectedOpts = ans?.selectedOptions || (selected ? [selected] : []);
+
+      let isCorrect = false;
+      if (q.isMultiSelect && q.correctAnswers && q.correctAnswers.length > 0) {
+        const req = q.correctAnswers;
+        isCorrect =
+          selectedOpts.length === req.length &&
+          selectedOpts.every((opt) => req.includes(opt));
+      } else {
+        isCorrect =
+          selected === q.correctAnswer ||
+          (q.correctAnswers ? q.correctAnswers.includes(selected || '') : false);
+      }
+
       return {
         question: q,
         userAnswer: selected,
+        userAnswers: selectedOpts,
         isCorrect,
         flagged: ans?.flagged || false,
       };
     });
 
     const totalQuestions = session.questions.length;
-    const answeredCount = questionResults.filter((r) => r.userAnswer !== null).length;
+    const answeredCount = questionResults.filter(
+      (r) => r.userAnswer !== null || (r.userAnswers && r.userAnswers.length > 0)
+    ).length;
     const correctCount = questionResults.filter((r) => r.isCorrect).length;
     const incorrectCount = answeredCount - correctCount;
     const unansweredCount = totalQuestions - answeredCount;
@@ -280,12 +318,14 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (res.isCorrect) categoryMap[cat].correct += 1;
     });
 
-    const categories = Object.entries(categoryMap).map(([category, data]) => ({
-      category,
-      total: data.total,
-      correct: data.correct,
-      percentage: Math.round((data.correct / data.total) * 100),
-    })).sort((a, b) => b.total - a.total);
+    const categories = Object.entries(categoryMap)
+      .map(([category, data]) => ({
+        category,
+        total: data.total,
+        correct: data.correct,
+        percentage: Math.round((data.correct / data.total) * 100),
+      }))
+      .sort((a, b) => b.total - a.total);
 
     const resultReport: QuizResultReport = {
       sessionId: session.id,
@@ -299,53 +339,50 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       scorePercentage,
       scaledScore,
       passed,
-      timeElapsedSeconds: elapsedSeconds,
+      timeElapsedSeconds: Math.max(1, elapsedSeconds),
       date: new Date().toLocaleDateString(undefined, {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
       }),
       categories,
       questionResults,
     };
 
-    // Update Global Stats in LocalStorage
+    // Update global user stats
     setStats((prev) => {
-      const newMissed = new Set(prev.missedQuestionIds);
-      const newMastered = new Set(prev.masteredQuestionIds);
+      const masteredSet = new Set(prev.masteredQuestionIds);
+      const missedSet = new Set(prev.missedQuestionIds);
 
       questionResults.forEach((r) => {
         if (r.isCorrect) {
-          newMastered.add(r.question.id);
-          newMissed.delete(r.question.id);
-        } else if (r.userAnswer !== null) {
-          newMissed.add(r.question.id);
-          newMastered.delete(r.question.id);
+          masteredSet.add(r.question.id);
+          missedSet.delete(r.question.id);
+        } else if (r.userAnswer !== null || (r.userAnswers && r.userAnswers.length > 0)) {
+          missedSet.add(r.question.id);
         }
       });
 
-      const historyItem = {
+      const historyEntry = {
         id: session.id,
-        date: resultReport.date,
+        date: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
         mode: session.mode,
         title: session.title,
         scorePercentage,
         scaledScore,
         passed,
         totalQuestions,
-        timeElapsedSeconds: elapsedSeconds,
+        timeElapsedSeconds: Math.max(1, elapsedSeconds),
       };
 
       return {
-        ...prev,
         totalQuizzesTaken: prev.totalQuizzesTaken + 1,
         totalQuestionsAnswered: prev.totalQuestionsAnswered + answeredCount,
         totalCorrect: prev.totalCorrect + correctCount,
-        masteredQuestionIds: Array.from(newMastered),
-        missedQuestionIds: Array.from(newMissed),
-        recentHistory: [historyItem, ...prev.recentHistory].slice(0, 30),
+        masteredQuestionIds: Array.from(masteredSet),
+        missedQuestionIds: Array.from(missedSet),
+        flaggedQuestionIds: prev.flaggedQuestionIds,
+        recentHistory: [historyEntry, ...prev.recentHistory.slice(0, 19)],
       };
     });
 
@@ -381,7 +418,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [session?.isFinished, session?.isPaused, session?.timeRemainingSeconds, finishQuiz]);
 
-  // Select Option
+  // Select Option (Handles single select and multi-select)
   const selectOption = useCallback(
     (option: string) => {
       if (!session || session.isFinished) return;
@@ -389,26 +426,61 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const currentQ = session.questions[session.currentIndex];
       if (!currentQ) return;
 
-      const isCorrect = option === currentQ.correctAnswer;
-
-      // Audio feedback
-      if (session.settings.instantFeedback) {
-        if (isCorrect) soundFx.playCorrect();
-        else soundFx.playIncorrect();
-      } else {
-        soundFx.playSelect();
-      }
-
       setSession((prev) => {
         if (!prev) return null;
         const oldAns = prev.answers[currentQ.id];
+        const isMulti = !!currentQ.isMultiSelect;
+        const reqCount = currentQ.requiredSelections || (currentQ.correctAnswers ? currentQ.correctAnswers.length : 1);
+
+        let newSelectedOptions: string[] = [];
+        let newSelectedOption: string | null = null;
+        let isCorrect: boolean | null = null;
+
+        if (isMulti) {
+          const currentList = oldAns?.selectedOptions || (oldAns?.selectedOption ? [oldAns.selectedOption] : []);
+          if (currentList.includes(option)) {
+            newSelectedOptions = currentList.filter((o) => o !== option);
+          } else {
+            if (currentList.length < reqCount) {
+              newSelectedOptions = [...currentList, option];
+            } else {
+              // Replace last or shift
+              newSelectedOptions = [...currentList.slice(1), option];
+            }
+          }
+          newSelectedOption = newSelectedOptions.length > 0 ? newSelectedOptions.join(', ') : null;
+
+          if (currentQ.correctAnswers && newSelectedOptions.length === reqCount) {
+            isCorrect =
+              newSelectedOptions.length === currentQ.correctAnswers.length &&
+              newSelectedOptions.every((o) => currentQ.correctAnswers!.includes(o));
+          }
+        } else {
+          newSelectedOptions = [option];
+          newSelectedOption = option;
+          isCorrect =
+            option === currentQ.correctAnswer ||
+            (currentQ.correctAnswers ? currentQ.correctAnswers.includes(option) : false);
+        }
+
+        // Sound feedback
+        if (session.settings.instantFeedback) {
+          if (isCorrect === true) soundFx.playCorrect();
+          else if (isCorrect === false && (!isMulti || newSelectedOptions.length === reqCount))
+            soundFx.playIncorrect();
+          else soundFx.playSelect();
+        } else {
+          soundFx.playSelect();
+        }
+
         return {
           ...prev,
           answers: {
             ...prev.answers,
             [currentQ.id]: {
               ...oldAns,
-              selectedOption: option,
+              selectedOption: newSelectedOption,
+              selectedOptions: newSelectedOptions,
               isCorrect,
             },
           },
@@ -488,8 +560,15 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Mode Launchers
   const startExamSimulation = useCallback(
-    (count: number = 65, timeMins: number = 90) => {
-      const questions = getExamQuestions(count, true);
+    (count: number = 65, timeMins: number = 90, bankId: QuestionBankId = 'all') => {
+      const questions = getExamQuestions(count, true, bankId);
+      const bankLabel =
+        bankId === 'ccp400'
+          ? 'CCP 400 Question Bank'
+          : bankId === 'restart_kcs'
+          ? 're/Start Curriculum'
+          : 'Unified Exam Pool (503 Questions)';
+
       const settings: QuizSettings = {
         mode: 'exam_simulation',
         questionCount: questions.length,
@@ -497,12 +576,14 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
         instantFeedback: false,
         shuffleQuestions: true,
         shuffleOptions: true,
+        selectedBank: bankId,
       };
+
       initSession(
         questions,
         'exam_simulation',
         'AWS Certified Cloud Practitioner Simulation',
-        `${questions.length} Questions • ${timeMins} Minutes • 700 Passing Score Standard`,
+        `${questions.length} Questions • ${timeMins} Minutes • ${bankLabel}`,
         settings
       );
     },
@@ -527,7 +608,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
         questions,
         'knowledge_check',
         title,
-        `${questions[0].category} • Knowledge Check Practice`,
+        `${questions[0].category} • Assessment Practice (${questions.length} Questions)`,
         settings
       );
     },
@@ -535,8 +616,8 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 
   const startCategoryPractice = useCallback(
-    (category: string, instantFeedback: boolean = true) => {
-      const questions = getQuestionsByCategory(category, true);
+    (category: string, instantFeedback: boolean = true, bankId: QuestionBankId = 'all') => {
+      const questions = getQuestionsByCategory(category, true, bankId);
       if (questions.length === 0) return;
       const settings: QuizSettings = {
         mode: 'category_practice',
@@ -546,12 +627,13 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
         shuffleQuestions: true,
         shuffleOptions: true,
         selectedCategory: category,
+        selectedBank: bankId,
       };
       initSession(
         questions,
         'category_practice',
         `${category} Domain Practice`,
-        `${questions.length} Focused Questions • Instant Explanations`,
+        `${questions.length} Questions • Instant Feedback & Explanations`,
         settings
       );
     },
@@ -600,7 +682,9 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const startCustomQuiz = useCallback(
     (customSettings: Partial<QuizSettings>, title: string = 'Custom Practice Quiz') => {
-      let pool = [...ALL_QUESTIONS];
+      const bankId = customSettings.selectedBank || 'all';
+      let pool = [...getQuestionsByBank(bankId)];
+
       if (customSettings.selectedCategory && customSettings.selectedCategory !== 'ALL') {
         pool = pool.filter((q) => q.category === customSettings.selectedCategory);
       }
@@ -618,6 +702,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
         shuffleQuestions: customSettings.shuffleQuestions ?? true,
         shuffleOptions: customSettings.shuffleOptions ?? true,
         selectedCategory: customSettings.selectedCategory,
+        selectedBank: bankId,
       };
 
       initSession(questions, settings.mode, title, `${questions.length} Questions`, settings);
@@ -632,7 +717,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (onlyIncorrect) {
         questions = session.questions.filter((q) => {
           const ans = session.answers[q.id];
-          return ans?.selectedOption !== q.correctAnswer;
+          return ans?.isCorrect !== true;
         });
       }
       if (questions.length === 0) questions = session.questions;
@@ -642,8 +727,9 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 
   // Flashcards launcher
-  const startFlashcards = useCallback((questions?: FormattedQuestion[]) => {
-    const deck = questions && questions.length > 0 ? questions : shuffleArray([...ALL_QUESTIONS]);
+  const startFlashcards = useCallback((questions?: FormattedQuestion[], bankId?: QuestionBankId) => {
+    let pool = questions && questions.length > 0 ? questions : getQuestionsByBank(bankId || 'all');
+    const deck = shuffleArray([...pool]);
     setFlashcardDeck(deck);
     setFlashcardIndex(0);
     setIsFlipped(false);
@@ -684,6 +770,8 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
         currentQuestion,
         currentAnswer,
         lastResult,
+        activeBank,
+        setActiveBank,
         startExamSimulation,
         startKnowledgeCheck,
         startCategoryPractice,

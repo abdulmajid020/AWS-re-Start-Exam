@@ -6,14 +6,20 @@ interface ExplanationCardProps {
   question: FormattedQuestion;
   isCorrect: boolean | null;
   selectedOption?: string | null;
+  selectedOptions?: string[];
 }
 
 export const ExplanationCard: React.FC<ExplanationCardProps> = ({
   question,
   isCorrect,
 }) => {
+  const correctText =
+    question.correctAnswers && question.correctAnswers.length > 1
+      ? question.correctAnswers.join(' • ')
+      : question.correctAnswer;
+
   return (
-    <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 space-y-3.5">
+    <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 space-y-3.5 animate-fadeIn">
       {/* Explanation Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -43,8 +49,10 @@ export const ExplanationCard: React.FC<ExplanationCardProps> = ({
         <div className="p-3 rounded-lg bg-emerald-50/90 border border-emerald-200 flex items-start gap-2.5 text-xs text-emerald-900">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
           <div>
-            <span className="font-bold">Correct Answer: </span>
-            <span>{question.correctAnswer}</span>
+            <span className="font-bold">
+              {question.isMultiSelect ? 'Correct Options: ' : 'Correct Answer: '}
+            </span>
+            <span>{correctText}</span>
           </div>
         </div>
       )}

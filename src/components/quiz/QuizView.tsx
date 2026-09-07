@@ -4,7 +4,7 @@ import { QuizProgressBar } from './QuizProgressBar';
 import { OptionButton } from './OptionButton';
 import { ExplanationCard } from './ExplanationCard';
 import { QuestionNavigatorDrawer } from './QuestionNavigatorDrawer';
-import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, CheckSquare } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
 
 export const QuizView: React.FC = () => {
@@ -24,8 +24,12 @@ export const QuizView: React.FC = () => {
 
   const isLastQuestion = session.currentIndex === session.questions.length - 1;
   const selectedOpt = currentAnswer?.selectedOption || null;
+  const selectedOpts = currentAnswer?.selectedOptions || (selectedOpt ? [selectedOpt] : []);
   const isCorrect = currentAnswer?.isCorrect ?? null;
   const instantFeedback = session.settings.instantFeedback;
+  const isMulti = !!currentQuestion.isMultiSelect;
+  const reqCount = currentQuestion.requiredSelections || 2;
+  const hasAnswered = isMulti ? selectedOpts.length >= reqCount : selectedOpt !== null;
 
   return (
     <div className="max-w-3xl mx-auto space-y-6 pb-12">
@@ -39,8 +43,25 @@ export const QuizView: React.FC = () => {
       <div className="rounded-2xl bg-white border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-6">
         <div className="space-y-2.5">
           <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-            <span>QUESTION {session.currentIndex + 1}</span>
-            <span>Single Selection</span>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-slate-700">QUESTION {session.currentIndex + 1}</span>
+              <span className="text-slate-300">/</span>
+              <span>{session.questions.length}</span>
+              {currentQuestion.bankId === 'ccp400' && (
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-amber-50 text-amber-800 border border-amber-200">
+                  CCP 400
+                </span>
+              )}
+            </div>
+
+            {isMulti ? (
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200 text-indigo-700 font-semibold text-[11px]">
+                <CheckSquare className="w-3.5 h-3.5" />
+                Select {reqCount} Options ({selectedOpts.length}/{reqCount})
+              </span>
+            ) : (
+              <span className="text-slate-500 font-medium">Single Selection</span>
+            )}
           </div>
 
           <h3 className="text-base sm:text-lg font-display font-bold text-slate-900 leading-snug">
@@ -56,7 +77,10 @@ export const QuizView: React.FC = () => {
               option={option}
               index={idx}
               selectedOption={selectedOpt}
+              selectedOptions={selectedOpts}
               correctAnswer={currentQuestion.correctAnswer}
+              correctAnswers={currentQuestion.correctAnswers}
+              isMultiSelect={isMulti}
               instantFeedback={instantFeedback}
               onSelect={selectOption}
             />
@@ -64,11 +88,12 @@ export const QuizView: React.FC = () => {
         </div>
 
         {/* Instant Explanation (if enabled) */}
-        {instantFeedback && selectedOpt !== null && (
+        {instantFeedback && hasAnswered && (
           <ExplanationCard
             question={currentQuestion}
             isCorrect={isCorrect}
             selectedOption={selectedOpt}
+            selectedOptions={selectedOpts}
           />
         )}
       </div>

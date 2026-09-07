@@ -1,5 +1,6 @@
 import rawData from './rawQuizData.json';
-import { FormattedQuestion, RawCourseData, RawKnowledgeCheck, RawQuestion } from '../types/quiz';
+import ccp400Data from './ccp400QuizData.json';
+import { FormattedQuestion, QuestionBankId, RawCourseData, RawKnowledgeCheck, RawQuestion } from '../types/quiz';
 
 export const COURSE_INFO = {
   courseId: (rawData as RawCourseData).course_id,
@@ -26,14 +27,16 @@ export function findMatchingOption(correctAnswer: string, options: string[]): st
   return prefixMatch || options[0];
 }
 
-// Convert all questions into a flat indexed array
-export const ALL_QUESTIONS: FormattedQuestion[] = (
+// Convert re/Start knowledge check questions
+export const RESTART_QUESTIONS: FormattedQuestion[] = (
   rawData as RawCourseData
 ).knowledge_checks.flatMap((kc: RawKnowledgeCheck) => {
   return (kc.questions || []).map((q: RawQuestion) => {
     const matchedCorrect = findMatchingOption(q.correct_answer, q.options);
+    const isMulti = /choose two|select two|choose three|select three/i.test(q.question);
     return {
       id: `kc-${kc.id}-q-${q.question_number}`,
+      bankId: 'restart_kcs' as const,
       kcIndex: kc.index,
       kcId: kc.id,
       kcTitle: kc.title,
@@ -43,22 +46,89 @@ export const ALL_QUESTIONS: FormattedQuestion[] = (
       question: q.question,
       options: q.options,
       correctAnswer: matchedCorrect,
+      correctAnswers: [matchedCorrect],
+      isMultiSelect: isMulti,
+      requiredSelections: isMulti ? 2 : 1,
       explanation: q.explanation,
     };
   });
 });
 
-export const ALL_KNOWLEDGE_CHECKS = (rawData as RawCourseData).knowledge_checks.map(
+// CCP 400 Question Bank questions (400 questions)
+export const CCP_QUESTIONS: FormattedQuestion[] = (ccp400Data.questions as FormattedQuestion[]).map(
+  (q) => ({
+    ...q,
+    bankId: 'ccp400' as const,
+  })
+);
+
+// Unified pool of ALL 503 questions
+export const ALL_QUESTIONS: FormattedQuestion[] = [...CCP_QUESTIONS, ...RESTART_QUESTIONS];
+
+// Knowledge checks from re/Start course
+export const RESTART_KNOWLEDGE_CHECKS = (rawData as RawCourseData).knowledge_checks.map(
   (kc: RawKnowledgeCheck) => ({
     index: kc.index,
     id: kc.id,
     title: kc.title,
     category: kc.category,
     summary: kc.summary,
+    bankId: 'restart_kcs' as const,
     questionCount: (kc.questions || []).length,
     questionIds: (kc.questions || []).map((q) => `kc-${kc.id}-q-${q.question_number}`),
   })
 );
+
+// Practice sets from CCP 400 bank (16 sets x 25 questions)
+export const CCP_PRACTICE_SETS = (ccp400Data.practice_sets || []).map((ps: any) => ({
+  index: ps.index,
+  id: ps.id,
+  title: ps.title,
+  category: ps.category,
+  summary: ps.summary,
+  bankId: 'ccp400' as const,
+  questionCount: ps.questionCount,
+  questionIds: ps.questionIds,
+}));
+
+// All modular assessments combined
+export const ALL_KNOWLEDGE_CHECKS = [...CCP_PRACTICE_SETS, ...RESTART_KNOWLEDGE_CHECKS];
+
+export interface QuestionBankMeta {
+  id: QuestionBankId;
+  name: string;
+  shortName: string;
+  count: number;
+  description: string;
+  badge: string;
+}
+
+export const QUESTION_BANKS: QuestionBankMeta[] = [
+  {
+    id: 'all',
+    name: 'Unified Master Bank (All Sources)',
+    shortName: 'All 503 Questions',
+    count: ALL_QUESTIONS.length,
+    description: 'Combined repository of CCP 400 official exam bank and AWS re/Start curriculum checks.',
+    badge: '503 Questions',
+  },
+  {
+    id: 'ccp400',
+    name: 'AWS Certified Cloud Practitioner (CCP 400)',
+    shortName: 'CCP 400 Exam Bank',
+    count: CCP_QUESTIONS.length,
+    description: '400 official exam simulation questions with multi-select and scenario problems.',
+    badge: '400 Questions',
+  },
+  {
+    id: 'restart_kcs',
+    name: 'AWS re/Start Curriculum Knowledge Checks',
+    shortName: 're/Start KCs',
+    count: RESTART_QUESTIONS.length,
+    description: '96 targeted module knowledge checks covering foundational AWS concepts A–Z.',
+    badge: '103 Questions',
+  },
+];
 
 export interface CategoryMeta {
   name: string;
@@ -142,11 +212,24 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 /**
+ * Get questions by bank
+ */
+export function getQuestionsByBank(bankId: QuestionBankId = 'all'): FormattedQuestion[] {
+  if (bankId === 'ccp400') return CCP_QUESTIONS;
+  if (bankId === 'restart_kcs') return RESTART_QUESTIONS;
+  return ALL_QUESTIONS;
+}
+
+/**
  * Gets a balanced sample of questions for the standard 65-question Exam Simulation
  * or custom count.
  */
-export function getExamQuestions(count: number = 65, shuffle: boolean = true): FormattedQuestion[] {
-  let pool = [...ALL_QUESTIONS];
+export function getExamQuestions(
+  count: number = 65,
+  shuffle: boolean = true,
+  bankId: QuestionBankId = 'all'
+): FormattedQuestion[] {
+  let pool = [...getQuestionsByBank(bankId)];
   if (shuffle) {
     pool = shuffleArray(pool);
   }
@@ -157,13 +240,18 @@ export function getExamQuestions(count: number = 65, shuffle: boolean = true): F
 /**
  * Get questions filtered by Category
  */
-export function getQuestionsByCategory(category: string, shuffle: boolean = false): FormattedQuestion[] {
-  const filtered = ALL_QUESTIONS.filter((q) => q.category === category);
+export function getQuestionsByCategory(
+  category: string,
+  shuffle: boolean = false,
+  bankId: QuestionBankId = 'all'
+): FormattedQuestion[] {
+  const bankPool = getQuestionsByBank(bankId);
+  const filtered = bankPool.filter((q) => q.category === category);
   return shuffle ? shuffleArray(filtered) : filtered;
 }
 
 /**
- * Get questions for a specific Knowledge Check ID
+ * Get questions for a specific Knowledge Check or Practice Set ID
  */
 export function getQuestionsByKC(kcId: number): FormattedQuestion[] {
   return ALL_QUESTIONS.filter((q) => q.kcId === kcId);
@@ -180,9 +268,15 @@ export function getQuestionsByIds(ids: string[]): FormattedQuestion[] {
 /**
  * Full-text search across all questions and KCs
  */
-export function searchQuestions(query: string, categoryFilter?: string): FormattedQuestion[] {
+export function searchQuestions(
+  query: string,
+  categoryFilter?: string,
+  bankId: QuestionBankId = 'all'
+): FormattedQuestion[] {
   const clean = query.trim().toLowerCase();
-  return ALL_QUESTIONS.filter((q) => {
+  const bankPool = getQuestionsByBank(bankId);
+
+  return bankPool.filter((q) => {
     if (categoryFilter && categoryFilter !== 'ALL' && q.category !== categoryFilter) {
       return false;
     }

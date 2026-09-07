@@ -3,8 +3,9 @@ import { HeroStats } from './HeroStats';
 import { ExamSimulationCard } from './ExamSimulationCard';
 import { CategoryPracticeGrid } from './CategoryPracticeGrid';
 import { KnowledgeCheckList } from './KnowledgeCheckList';
-import { Layers, BookOpen, Clock, ArrowRight } from 'lucide-react';
+import { Layers, BookOpen, Clock, ArrowRight, Sparkles, Database } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
+import { ALL_QUESTIONS, CCP_QUESTIONS, RESTART_QUESTIONS } from '../../data/quizData';
 
 export const Dashboard: React.FC = () => {
   const { startFlashcards, setCurrentView, stats } = useQuiz();
@@ -23,12 +24,13 @@ export const Dashboard: React.FC = () => {
         {/* Flashcards Card */}
         <div className="rounded-2xl bg-white border border-slate-200/90 p-5 flex items-center justify-between gap-4 shadow-sm">
           <div className="space-y-1 max-w-sm">
-            <div className="text-xs font-mono font-semibold text-slate-500">
+            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-slate-500">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
               Active Recall Mode
             </div>
             <h3 className="text-base font-display font-bold text-slate-900">Study Flashcards</h3>
             <p className="text-xs text-slate-600">
-              Drill all 103 questions with keyboard-friendly flip cards.
+              Drill all {ALL_QUESTIONS.length} questions across CCP 400 and re/Start with keyboard-friendly flip cards.
             </p>
           </div>
           <button
@@ -43,12 +45,15 @@ export const Dashboard: React.FC = () => {
         {/* Question Explorer Card */}
         <div className="rounded-2xl bg-white border border-slate-200/90 p-5 flex items-center justify-between gap-4 shadow-sm">
           <div className="space-y-1 max-w-sm">
-            <div className="text-xs font-mono font-semibold text-slate-500">
-              Curriculum Directory
+            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-slate-500">
+              <Database className="w-3.5 h-3.5 text-indigo-600" />
+              Complete Question Bank
             </div>
-            <h3 className="text-base font-display font-bold text-slate-900">Question Bank & Solutions</h3>
+            <h3 className="text-base font-display font-bold text-slate-900">
+              Repository & Solutions ({ALL_QUESTIONS.length}Q)
+            </h3>
             <p className="text-xs text-slate-600">
-              Browse the complete repository of questions and concept explanations.
+              Search and filter across {CCP_QUESTIONS.length} CCP exam questions and {RESTART_QUESTIONS.length} curriculum KCs.
             </p>
           </div>
           <button
@@ -61,32 +66,38 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Tab Navigation for Categories vs All KCs */}
-      <div className="space-y-4 pt-2">
-        <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
-          <button
-            onClick={() => setActiveTab('categories')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'categories'
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
-            }`}
-          >
-            <Layers className="w-4 h-4" />
-            18 AWS Categories
-          </button>
+      {/* 4. Tab Navigation for Categories vs Knowledge Checks */}
+      <div className="space-y-4 pt-1">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+          <div className="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200">
+            <button
+              onClick={() => setActiveTab('categories')}
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                activeTab === 'categories'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              Categories
+            </button>
 
-          <button
-            onClick={() => setActiveTab('kcs')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'kcs'
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
-            }`}
-          >
-            <BookOpen className="w-4 h-4" />
-            All 96 Knowledge Checks (A–Z)
-          </button>
+            <button
+              onClick={() => setActiveTab('kcs')}
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                activeTab === 'kcs'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              Knowledge Checks
+            </button>
+          </div>
+
+          <span className="text-xs font-mono text-slate-400 hidden sm:inline">
+            {activeTab === 'categories' ? '18 AWS Domains' : '112 Assessment Sets'}
+          </span>
         </div>
 
         {/* Tab Content */}
@@ -118,8 +129,8 @@ export const Dashboard: React.FC = () => {
                   <span
                     className={`font-mono font-bold text-xs px-2 py-0.5 rounded ${
                       item.passed
-                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                        : 'bg-rose-50 text-rose-800 border border-rose-200'
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                        : 'bg-rose-50 text-rose-800 border-rose-200'
                     }`}
                   >
                     {item.scaledScore} / 1000

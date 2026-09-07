@@ -1,3 +1,5 @@
+export type QuestionBankId = 'all' | 'ccp400' | 'restart_kcs';
+
 export interface RawQuestion {
   question_number: number;
   question: string;
@@ -24,7 +26,8 @@ export interface RawCourseData {
 }
 
 export interface FormattedQuestion {
-  id: string; // e.g. "kc-1-q-1"
+  id: string; // e.g. "kc-1-q-1" or "ccp-q-1"
+  bankId?: 'ccp400' | 'restart_kcs';
   kcIndex: number;
   kcId: number;
   kcTitle: string;
@@ -34,6 +37,9 @@ export interface FormattedQuestion {
   question: string;
   options: string[];
   correctAnswer: string;
+  correctAnswers?: string[];
+  isMultiSelect?: boolean;
+  requiredSelections?: number;
   explanation: string;
 }
 
@@ -56,11 +62,13 @@ export interface QuizSettings {
   shuffleOptions: boolean;
   selectedCategory?: string;
   selectedKcId?: number;
+  selectedBank?: QuestionBankId;
 }
 
 export interface UserAnswerState {
   questionId: string;
   selectedOption: string | null;
+  selectedOptions?: string[]; // for multi-select
   isCorrect: boolean | null;
   flagged: boolean;
   timeSpentSeconds: number;
@@ -107,6 +115,7 @@ export interface QuizResultReport {
   questionResults: {
     question: FormattedQuestion;
     userAnswer: string | null;
+    userAnswers?: string[];
     isCorrect: boolean;
     flagged: boolean;
   }[];

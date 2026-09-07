@@ -1,18 +1,39 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Compass, Play, ChevronDown, ChevronUp, CheckCircle2, BookOpen, Layers } from 'lucide-react';
-import { ALL_QUESTIONS, ALL_CATEGORIES } from '../../data/quizData';
+import {
+  Search,
+  Compass,
+  Play,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle2,
+  BookOpen,
+  Layers,
+  Database,
+  CheckSquare,
+} from 'lucide-react';
+import {
+  ALL_QUESTIONS,
+  CCP_QUESTIONS,
+  RESTART_QUESTIONS,
+  ALL_CATEGORIES,
+  getQuestionsByBank,
+} from '../../data/quizData';
 import { CategoryIcon } from '../common/CategoryIcon';
 import { useQuiz } from '../../context/QuizContext';
+import { QuestionBankId } from '../../types/quiz';
 
 export const QuestionExplorer: React.FC = () => {
   const { startKnowledgeCheck } = useQuiz();
+  const [selectedBank, setSelectedBank] = useState<QuestionBankId>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const filteredQuestions = useMemo(() => {
     const clean = searchTerm.trim().toLowerCase();
-    return ALL_QUESTIONS.filter((q) => {
+    const bankPool = getQuestionsByBank(selectedBank);
+
+    return bankPool.filter((q) => {
       if (selectedCategory !== 'ALL' && q.category !== selectedCategory) return false;
       if (!clean) return true;
       return (
@@ -23,7 +44,7 @@ export const QuestionExplorer: React.FC = () => {
         q.options.some((opt) => opt.toLowerCase().includes(clean))
       );
     });
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, selectedBank]);
 
   return (
     <div className="max-w-3xl mx-auto space-y-6 pb-16">
@@ -31,22 +52,59 @@ export const QuestionExplorer: React.FC = () => {
       <div className="space-y-1">
         <h1 className="text-xl sm:text-2xl font-display font-extrabold text-slate-900 flex items-center gap-2">
           <Compass className="w-5 h-5 text-slate-700" />
-          Curriculum & Question Bank
+          Question Repository & Solutions
         </h1>
         <p className="text-xs text-slate-500">
-          Browse and search through all 103 questions and detailed solutions
+          Browse and search through all {ALL_QUESTIONS.length} questions across the CCP 400 exam bank and curriculum knowledge checks.
         </p>
       </div>
 
-      {/* Search & Category Filter bar */}
+      {/* Bank Filter & Search */}
       <div className="space-y-2.5">
+        {/* Bank Selection Pills */}
+        <div className="flex items-center gap-2 p-1.5 rounded-xl bg-white border border-slate-200 shadow-sm overflow-x-auto">
+          <button
+            onClick={() => setSelectedBank('all')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+              selectedBank === 'all'
+                ? 'bg-slate-900 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Database className="w-3.5 h-3.5" />
+            All Sources ({ALL_QUESTIONS.length})
+          </button>
+          <button
+            onClick={() => setSelectedBank('ccp400')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+              selectedBank === 'ccp400'
+                ? 'bg-slate-900 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+            CCP 400 Exam Bank ({CCP_QUESTIONS.length})
+          </button>
+          <button
+            onClick={() => setSelectedBank('restart_kcs')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+              selectedBank === 'restart_kcs'
+                ? 'bg-slate-900 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-sky-500"></span>
+            re/Start KCs ({RESTART_QUESTIONS.length})
+          </button>
+        </div>
+
         <div className="relative w-full">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search keywords, services (e.g. S3, IAM, VPC, EC2, CloudTrail, Linux)..."
+            placeholder="Search keywords, services (e.g. S3, IAM, VPC, EC2, CloudTrail, DynamoDB, TCO)..."
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors shadow-sm"
           />
         </div>
@@ -61,7 +119,7 @@ export const QuestionExplorer: React.FC = () => {
                 : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
             }`}
           >
-            All ({ALL_QUESTIONS.length})
+            All Categories
           </button>
           {ALL_CATEGORIES.map((cat) => (
             <button
@@ -83,12 +141,16 @@ export const QuestionExplorer: React.FC = () => {
 
       {/* Questions List */}
       <div className="space-y-2.5">
-        <div className="text-xs font-mono text-slate-500">
-          Showing {filteredQuestions.length} Questions
+        <div className="text-xs font-mono text-slate-500 flex items-center justify-between">
+          <span>Showing {filteredQuestions.length} Questions</span>
+          <span>{selectedBank === 'ccp400' ? 'CCP 400 Official' : selectedBank === 'restart_kcs' ? 're/Start Curriculum' : 'Master Pool'}</span>
         </div>
 
         {filteredQuestions.map((q, idx) => {
           const isExpanded = expandedId === q.id;
+          const isCCP = q.bankId === 'ccp400';
+          const targetCorrect = q.correctAnswers || [q.correctAnswer];
+
           return (
             <div
               key={q.id}
@@ -100,18 +162,30 @@ export const QuestionExplorer: React.FC = () => {
                 className="w-full p-4 text-left flex items-start justify-between gap-4 cursor-pointer hover:bg-slate-50 transition-colors"
               >
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-[11px] font-mono text-slate-400">#{idx + 1}</span>
+                    <span
+                      className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${
+                        isCCP
+                          ? 'bg-amber-50 text-amber-900 border-amber-200'
+                          : 'bg-sky-50 text-sky-900 border-sky-200'
+                      }`}
+                    >
+                      {isCCP ? `CCP Q${q.questionNumber}` : `KC #${q.kcIndex}`}
+                    </span>
                     <span className="inline-flex items-center gap-1 text-[11px] font-mono text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200">
                       <CategoryIcon category={q.category} className="w-3 h-3 text-slate-500" />
                       {q.category}
                     </span>
-                    <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-                      {q.kcTitle}
-                    </span>
+                    {q.isMultiSelect && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-indigo-700 px-1.5 py-0.5 rounded bg-indigo-50 border border-indigo-200">
+                        <CheckSquare className="w-3 h-3" />
+                        Choose {q.requiredSelections || 2}
+                      </span>
+                    )}
                   </div>
 
-                  <h3 className="text-sm font-medium text-slate-900 leading-snug">
+                  <h3 className="text-sm font-medium text-slate-900 leading-snug pt-0.5">
                     {q.question}
                   </h3>
                 </div>
@@ -131,7 +205,7 @@ export const QuestionExplorer: React.FC = () => {
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {q.options.map((opt, oIdx) => {
-                        const isCorrect = opt === q.correctAnswer;
+                        const isCorrect = targetCorrect.includes(opt);
                         return (
                           <div
                             key={oIdx}
@@ -178,7 +252,7 @@ export const QuestionExplorer: React.FC = () => {
                       className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-all shadow-sm"
                     >
                       <Play className="w-3 h-3 fill-current" />
-                      Practice KC
+                      Practice Set
                     </button>
                   </div>
                 </div>
@@ -195,6 +269,7 @@ export const QuestionExplorer: React.FC = () => {
               onClick={() => {
                 setSearchTerm('');
                 setSelectedCategory('ALL');
+                setSelectedBank('all');
               }}
               className="mt-2 text-xs text-slate-800 font-semibold hover:underline"
             >

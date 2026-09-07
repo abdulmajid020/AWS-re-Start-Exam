@@ -1,61 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ALL_CATEGORIES } from '../../data/quizData';
 import { CategoryIcon } from '../common/CategoryIcon';
-import { ArrowRight, Layers } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
 
 export const CategoryPracticeGrid: React.FC = () => {
   const { startCategoryPractice } = useQuiz();
+  const [search, setSearch] = useState('');
+
+  const filteredCategories = ALL_CATEGORIES.filter((cat) =>
+    cat.name.toLowerCase().includes(search.trim().toLowerCase())
+  );
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <div>
-          <h2 className="text-lg sm:text-xl font-display font-bold text-slate-900 flex items-center gap-2">
-            <Layers className="w-5 h-5 text-slate-700" />
-            18 Curriculum Categories & Domains
-          </h2>
-          <p className="text-xs text-slate-500">
-            Targeted drills with instant concept explanations
-          </p>
+    <div className="space-y-3">
+      {/* Quick search filter */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="relative flex-1 max-w-xs">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search domains..."
+            className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors shadow-subtle"
+          />
         </div>
+        <span className="text-xs font-mono text-slate-500">
+          {filteredCategories.length} Domains
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {ALL_CATEGORIES.map((cat) => (
+      {/* Grid of Categories */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+        {filteredCategories.map((cat) => (
           <button
             key={cat.name}
             onClick={() => startCategoryPractice(cat.name, true)}
-            className="group flex flex-col justify-between p-4 rounded-xl bg-white hover:bg-slate-50/80 border border-slate-200/90 hover:border-slate-300 text-left transition-all duration-150 shadow-subtle hover:shadow-card"
+            className="group flex items-center justify-between p-3 rounded-xl bg-white hover:bg-slate-900 border border-slate-200/90 hover:border-slate-900 text-left transition-all duration-150 shadow-subtle hover:shadow-md"
           >
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:text-slate-900 transition-colors">
-                  <CategoryIcon category={cat.name} className="w-4 h-4" />
-                </div>
-                <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
-                  {cat.count} {cat.count === 1 ? 'Question' : 'Questions'}
-                </span>
+            <div className="flex items-center gap-3 min-w-0 pr-2">
+              <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-800 group-hover:text-white group-hover:border-slate-700 shrink-0 transition-colors">
+                <CategoryIcon category={cat.name} className="w-4 h-4" />
               </div>
-
-              <div>
-                <h3 className="text-sm font-display font-bold text-slate-900 group-hover:text-slate-800 line-clamp-1">
+              <div className="min-w-0">
+                <h3 className="text-xs sm:text-sm font-display font-semibold text-slate-900 group-hover:text-white truncate">
                   {cat.name}
                 </h3>
-                <p className="text-xs text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
-                  {cat.description}
+                <p className="text-[11px] text-slate-500 group-hover:text-slate-300 font-mono">
+                  {cat.count} Questions
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-xs text-slate-400">
-              <span className="text-[11px] font-mono text-slate-400">
-                {cat.kcCount} {cat.kcCount === 1 ? 'Check' : 'Checks'}
-              </span>
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-700 opacity-80 group-hover:opacity-100">
-                Practice
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
+            <div className="shrink-0 flex items-center text-slate-400 group-hover:text-amber-400">
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </div>
           </button>
         ))}
@@ -63,3 +62,4 @@ export const CategoryPracticeGrid: React.FC = () => {
     </div>
   );
 };
+

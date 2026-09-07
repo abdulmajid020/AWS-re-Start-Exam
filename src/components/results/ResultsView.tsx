@@ -11,6 +11,7 @@ import {
   ChevronUp,
   Layers,
   Coffee,
+  CheckSquare,
 } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
 import { CategoryIcon } from '../common/CategoryIcon';
@@ -120,76 +121,75 @@ export const ResultsView: React.FC = () => {
 
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/70">
             <div className="flex items-center gap-1.5 text-xs text-slate-600 mb-0.5">
-              <Clock className="w-3.5 h-3.5 text-slate-600" />
+              <Clock className="w-3.5 h-3.5 text-slate-500" />
               <span>Time Elapsed</span>
             </div>
-            <div className="text-lg font-display font-bold text-slate-900">
+            <div className="text-lg font-display font-bold text-slate-900 font-mono">
               {formatMinutes(lastResult.timeElapsedSeconds)}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Action Buttons Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <button
-          onClick={() => setCurrentView('home')}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-sm transition-all"
-        >
-          <Home className="w-4 h-4" />
-          <span>Dashboard</span>
-        </button>
-
-        <div className="flex flex-wrap items-center gap-2">
-          {lastResult.incorrectCount > 0 && (
-            <button
-              onClick={() => retakeCurrentQuiz(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 text-xs font-semibold transition-all"
-            >
-              <RotateCcw className="w-4 h-4 text-rose-600" />
-              <span>Retake Missed ({lastResult.incorrectCount})</span>
-            </button>
-          )}
-
+        {/* Action Controls */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
           <button
-            onClick={() => retakeCurrentQuiz(false)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-display font-bold shadow-sm transition-all"
+            onClick={() => setCurrentView('home')}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors"
           >
-            <RotateCcw className="w-4 h-4" />
-            <span>Retake Full Test</span>
+            <Home className="w-4 h-4" />
+            <span>Return to Dashboard</span>
           </button>
+
+          <div className="flex items-center gap-2">
+            {lastResult.incorrectCount > 0 && (
+              <button
+                onClick={() => retakeCurrentQuiz(true)}
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-800 font-semibold text-xs transition-colors"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Retry {lastResult.incorrectCount} Missed Questions</span>
+              </button>
+            )}
+
+            <button
+              onClick={() => retakeCurrentQuiz(false)}
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-display font-bold text-xs shadow-sm transition-all"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Retake Entire Exam</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Domain Mastery Breakdown */}
+      {/* Domain / Category Performance Breakdown */}
       {lastResult.categories.length > 0 && (
-        <div className="rounded-2xl bg-white border border-slate-200/90 p-6 space-y-4 shadow-sm">
+        <div className="rounded-2xl bg-white border border-slate-200/90 p-6 shadow-sm space-y-4">
           <h3 className="text-base font-display font-bold text-slate-900 flex items-center gap-2">
-            <Layers className="w-4 h-4 text-slate-600" />
-            Category & Domain Breakdown
+            <Layers className="w-4 h-4 text-slate-700" />
+            Domain & Category Breakdown
           </h3>
 
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {lastResult.categories.map((cat) => (
-              <div key={cat.category} className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-medium">
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <CategoryIcon category={cat.category} className="w-3.5 h-3.5 text-slate-500" />
-                    {cat.category}
-                  </span>
-                  <span className="font-mono text-slate-500">
-                    <strong className="text-slate-900">{cat.correct}</strong> / {cat.total} (
-                    {cat.percentage}%)
+              <div
+                key={cat.category}
+                className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 space-y-2"
+              >
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1.5 font-semibold text-slate-800">
+                    <CategoryIcon category={cat.category} className="w-3.5 h-3.5 text-slate-600" />
+                    <span className="truncate max-w-[170px]">{cat.category}</span>
+                  </div>
+                  <span className="font-mono font-bold text-slate-700">
+                    {cat.correct}/{cat.total} ({cat.percentage}%)
                   </span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+
+                <div className="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all duration-300 ${
-                      cat.percentage >= 70
-                        ? 'bg-emerald-600'
-                        : cat.percentage >= 50
-                        ? 'bg-amber-500'
-                        : 'bg-rose-500'
+                    className={`h-full transition-all duration-500 ${
+                      cat.percentage >= 70 ? 'bg-emerald-500' : 'bg-rose-500'
                     }`}
                     style={{ width: `${cat.percentage}%` }}
                   />
@@ -200,7 +200,7 @@ export const ResultsView: React.FC = () => {
         </div>
       )}
 
-      {/* Support / Sponsor Banner on Results Screen */}
+      {/* Support / Sponsor Banner */}
       <div className="rounded-2xl bg-amber-50/70 border border-amber-200 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-white border border-amber-200 text-amber-700 shrink-0">
@@ -211,7 +211,7 @@ export const ResultsView: React.FC = () => {
               Found this test helpful for your AWS certification?
             </h4>
             <p className="text-xs text-slate-600">
-              Support this open-source tool with a coffee or share it with other AWS re/Start students!
+              Support this open-source tool or share it with other AWS students!
             </p>
           </div>
         </div>
@@ -279,6 +279,16 @@ export const ResultsView: React.FC = () => {
         <div className="space-y-2.5">
           {filteredQuestions.map((item, idx) => {
             const isExpanded = expandedId === item.question.id;
+            const isCCP = item.question.bankId === 'ccp400';
+            const userAnsText =
+              item.userAnswers && item.userAnswers.length > 0
+                ? item.userAnswers.join(' • ')
+                : item.userAnswer || 'Unanswered';
+            const correctAnsText =
+              item.question.correctAnswers && item.question.correctAnswers.length > 1
+                ? item.question.correctAnswers.join(' • ')
+                : item.question.correctAnswer;
+
             return (
               <div
                 key={item.question.id}
@@ -298,10 +308,25 @@ export const ResultsView: React.FC = () => {
                       )}
                     </div>
                     <div>
-                      <div className="flex items-center gap-2 mb-0.5">
+                      <div className="flex flex-wrap items-center gap-2 mb-0.5">
                         <span className="text-[11px] font-mono text-slate-400">
                           #{idx + 1} • {item.question.category}
                         </span>
+                        <span
+                          className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${
+                            isCCP
+                              ? 'bg-amber-50 text-amber-900 border-amber-200'
+                              : 'bg-sky-50 text-sky-900 border-sky-200'
+                          }`}
+                        >
+                          {isCCP ? `CCP Q${item.question.questionNumber}` : `KC #${item.question.kcIndex}`}
+                        </span>
+                        {item.question.isMultiSelect && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-indigo-700 px-1.5 py-0.5 rounded bg-indigo-50 border border-indigo-200">
+                            <CheckSquare className="w-2.5 h-2.5" />
+                            Multi-Select
+                          </span>
+                        )}
                         {item.flagged && (
                           <span className="inline-flex items-center gap-1 text-[10px] font-mono text-amber-800 px-1.5 rounded bg-amber-50 border border-amber-200">
                             <Flag className="w-2.5 h-2.5" /> Flagged
@@ -330,14 +355,14 @@ export const ResultsView: React.FC = () => {
                             item.isCorrect ? 'text-emerald-700' : 'text-rose-700'
                           }`}
                         >
-                          {item.userAnswer || 'Unanswered'}
+                          {userAnsText}
                         </span>
                       </div>
 
                       <div className="p-3 rounded-lg bg-white border border-slate-200">
                         <span className="text-slate-400 block mb-0.5">Correct Answer:</span>
                         <span className="font-semibold text-emerald-700">
-                          {item.question.correctAnswer}
+                          {correctAnsText}
                         </span>
                       </div>
                     </div>

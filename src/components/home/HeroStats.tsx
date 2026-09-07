@@ -6,12 +6,15 @@ import {
   AlertCircle,
   ArrowRight,
   RotateCcw,
+  Sparkles,
 } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
+import { ALL_QUESTIONS, CCP_QUESTIONS, RESTART_QUESTIONS } from '../../data/quizData';
 
 export const HeroStats: React.FC = () => {
   const { stats, startWeakAreas, startFlaggedReview, clearStats } = useQuiz();
 
+  const totalQuestions = ALL_QUESTIONS.length;
   const totalAnswered = stats.totalQuestionsAnswered;
   const accuracy = totalAnswered > 0 ? Math.round((stats.totalCorrect / totalAnswered) * 100) : 0;
   const masteredCount = stats.masteredQuestionIds.length;
@@ -25,13 +28,14 @@ export const HeroStats: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-xs font-mono font-medium text-slate-700">
-              AWS re/Start GHACC71 • Cloud Practitioner
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              AWS Certified Cloud Practitioner • 503 Questions Bank
             </div>
             <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 tracking-tight">
               AWS Knowledge Checks & Exam Simulator
             </h1>
             <p className="text-sm text-slate-600 leading-relaxed">
-              Complete practice assessment covering 96 curriculum modules and standard 90-minute timed certification exam simulations.
+              Complete practice assessment repository containing the <span className="font-semibold text-slate-900">CCP 400 Question Bank</span> ({CCP_QUESTIONS.length} Questions) and <span className="font-semibold text-slate-900">AWS re/Start Curriculum KCs</span> ({RESTART_QUESTIONS.length} Questions).
             </p>
           </div>
 
@@ -93,7 +97,7 @@ export const HeroStats: React.FC = () => {
               <span>Mastered</span>
             </div>
             <div className="text-xl font-display font-bold text-slate-900">
-              {masteredCount} <span className="text-xs text-slate-500 font-normal">/ 103</span>
+              {masteredCount} <span className="text-xs text-slate-500 font-normal">/ {totalQuestions}</span>
             </div>
           </div>
 
