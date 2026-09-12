@@ -560,7 +560,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Mode Launchers
   const startExamSimulation = useCallback(
-    (count: number = 65, timeMins: number = 90, bankId: QuestionBankId = 'all') => {
+    (count: number = 30, timeMins: number = 45, bankId: QuestionBankId = 'ccp400') => {
       const questions = getExamQuestions(count, true, bankId);
       const bankLabel =
         bankId === 'ccp400'

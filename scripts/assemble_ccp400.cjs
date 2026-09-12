@@ -46,13 +46,17 @@ rawQuestions.forEach((q, idx) => {
     errors.push(`Question Q${qNum}: Mismatch between letter count (${data.ans.length}) and mapped text count (${correctAnswers.length})`);
   }
 
+  const setIndex = Math.ceil(qNum / 30); // Practice Sets of 30 questions each
+  const setStartQ = (setIndex - 1) * 30 + 1;
+  const setEndQ = Math.min(setIndex * 30, 400);
+
   const formatted = {
     id: `ccp-q-${qNum}`,
     bankId: 'ccp400',
     questionNumber: qNum,
-    kcIndex: Math.ceil(qNum / 25), // 16 Practice Sets of 25 questions each
-    kcId: 700000 + Math.ceil(qNum / 25),
-    kcTitle: `CCP 400 - Practice Set ${Math.ceil(qNum / 25)} (Q${(Math.ceil(qNum / 25) - 1) * 25 + 1}–Q${Math.min(qNum + (25 - ((qNum - 1) % 25) - 1), 400)})`,
+    kcIndex: setIndex,
+    kcId: 700000 + setIndex,
+    kcTitle: `CCP 400 - Practice Set ${setIndex} (Q${setStartQ}–Q${setEndQ})`,
     category: data.cat,
     summary: `Official AWS Certified Cloud Practitioner exam practice question covering ${data.cat}.`,
     question: q.question,
@@ -75,18 +79,19 @@ if (errors.length > 0) {
 
 console.log(`Successfully assembled ${finalizedQuestions.length} questions!`);
 
-// Group into 16 Practice Sets (25 questions each)
+// Group into Practice Sets (30 questions each)
+const totalSets = Math.ceil(finalizedQuestions.length / 30);
 const practiceSets = [];
-for (let s = 1; s <= 16; s++) {
+for (let s = 1; s <= totalSets; s++) {
   const setQuestions = finalizedQuestions.filter(q => q.kcIndex === s);
-  const startQ = (s - 1) * 25 + 1;
-  const endQ = Math.min(s * 25, 400);
+  const startQ = (s - 1) * 30 + 1;
+  const endQ = Math.min(s * 30, 400);
   practiceSets.push({
     index: s,
     id: 700000 + s,
     title: `CCP 400 - Practice Set ${s}`,
     category: 'Certification Prep',
-    summary: `Curated practice assessment of 25 official AWS CCP exam questions (Q${startQ}–Q${endQ}).`,
+    summary: `Curated practice assessment of ${setQuestions.length} official AWS CCP exam questions (Q${startQ}–Q${endQ}).`,
     questionCount: setQuestions.length,
     questionIds: setQuestions.map(q => q.id)
   });

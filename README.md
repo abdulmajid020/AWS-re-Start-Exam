@@ -6,11 +6,12 @@ A minimalist, high-performance **React + TypeScript + Tailwind CSS** assessment 
 
 ## 🌟 Key Features
 
-- **Certification Exam Simulation**: 65 timed questions (~83s/question) with a 90-minute countdown timer, question map navigator, item flagging, and scaled scoring (100–1000) with official 700+ passing cutoff.
+- **Certification Exam Simulation**: 30 timed questions per set (~90s/question) with a 45-minute countdown timer, question map navigator, item flagging, and scaled scoring (100–1000) with official 700+ passing cutoff.
+- **CCP 400 Question Bank**: 14 modular practice sets of 30 official exam questions each.
 - **96 Module Knowledge Checks**: Full directory of formative assessments arranged alphabetically (A–Z).
 - **18 Curriculum Domains**: Targeted practice covering *Networking, Linux & Scripting, Databases, Security & IAM, Compute, Storage, DevOps, Cloud Architecture, Python*, etc.
 - **Active Recall Flashcards**: 3D flip card study mode with mastery tracking.
-- **Question Bank Explorer**: Searchable directory across all 103 questions, answer choices, and conceptual solutions.
+- **Question Bank Explorer**: Searchable directory across all 503 questions, answer choices, and conceptual solutions.
 - **Keyboard Shortcuts**: Complete hands-on navigation (`1–4`, `A–D`, `→/←`, `F`, `M`, `Space`, `?`).
 - **Typography**: Paired with Google Fonts *Plus Jakarta Sans* and *Maven Pro*.
 - **Support & Sponsorship**: Integrated [Buy Me a Coffee](https://buymeacoffee.com/projectelon).

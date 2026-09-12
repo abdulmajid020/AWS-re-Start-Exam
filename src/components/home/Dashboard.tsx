@@ -5,7 +5,7 @@ import { CategoryPracticeGrid } from './CategoryPracticeGrid';
 import { KnowledgeCheckList } from './KnowledgeCheckList';
 import { Layers, BookOpen, Clock, ArrowRight, Sparkles, Database } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
-import { ALL_QUESTIONS, CCP_QUESTIONS, RESTART_QUESTIONS } from '../../data/quizData';
+import { ALL_QUESTIONS, CCP_QUESTIONS, RESTART_QUESTIONS, ALL_KNOWLEDGE_CHECKS, ALL_CATEGORIES } from '../../data/quizData';
 
 export const Dashboard: React.FC = () => {
   const { startFlashcards, setCurrentView, stats } = useQuiz();
@@ -96,7 +96,7 @@ export const Dashboard: React.FC = () => {
           </div>
 
           <span className="text-xs font-mono text-slate-400 hidden sm:inline">
-            {activeTab === 'categories' ? '18 AWS Domains' : '112 Assessment Sets'}
+            {activeTab === 'categories' ? `${ALL_CATEGORIES.length} AWS Domains` : `${ALL_KNOWLEDGE_CHECKS.length} Assessment Sets`}
           </span>
         </div>
 

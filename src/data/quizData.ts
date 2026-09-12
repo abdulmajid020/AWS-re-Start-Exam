@@ -79,7 +79,7 @@ export const RESTART_KNOWLEDGE_CHECKS = (rawData as RawCourseData).knowledge_che
   })
 );
 
-// Practice sets from CCP 400 bank (16 sets x 25 questions)
+// Practice sets from CCP 400 bank (14 sets x 30 questions max)
 export const CCP_PRACTICE_SETS = (ccp400Data.practice_sets || []).map((ps: any) => ({
   index: ps.index,
   id: ps.id,
@@ -221,13 +221,13 @@ export function getQuestionsByBank(bankId: QuestionBankId = 'all'): FormattedQue
 }
 
 /**
- * Gets a balanced sample of questions for the standard 65-question Exam Simulation
+ * Gets a balanced sample of questions for the standard 30-question Exam Simulation
  * or custom count.
  */
 export function getExamQuestions(
-  count: number = 65,
+  count: number = 30,
   shuffle: boolean = true,
-  bankId: QuestionBankId = 'all'
+  bankId: QuestionBankId = 'ccp400'
 ): FormattedQuestion[] {
   let pool = [...getQuestionsByBank(bankId)];
   if (shuffle) {

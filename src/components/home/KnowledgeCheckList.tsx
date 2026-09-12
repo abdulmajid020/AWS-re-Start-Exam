@@ -67,7 +67,7 @@ export const KnowledgeCheckList: React.FC = () => {
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            CCP 400 (16)
+            CCP 400 ({CCP_PRACTICE_SETS.length})
           </button>
           <button
             onClick={() => {
@@ -80,7 +80,7 @@ export const KnowledgeCheckList: React.FC = () => {
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            re/Start KCs (96)
+            re/Start KCs ({RESTART_KNOWLEDGE_CHECKS.length})
           </button>
         </div>
 

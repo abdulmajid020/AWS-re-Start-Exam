@@ -44,7 +44,7 @@ export interface FormattedQuestion {
 }
 
 export type QuizMode =
-  | 'exam_simulation'   // 65 questions, 90 mins, standard CLF-C02 simulation
+  | 'exam_simulation'   // 30 questions, 45 mins simulation
   | 'knowledge_check'   // single or selected KC
   | 'category_practice' // questions from a specific category
   | 'custom_practice'   // custom question count and timer
