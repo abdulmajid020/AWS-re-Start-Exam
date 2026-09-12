@@ -20,40 +20,40 @@ export const QuestionNavigatorDrawer: React.FC = () => {
   const flaggedCount = Object.values(session.answers).filter((a) => a.flagged).length;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/30 backdrop-blur-xs animate-fade-in">
-      <div className="relative w-full max-w-md bg-white border-l border-slate-200 h-full flex flex-col shadow-xl p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-xs animate-fade-in">
+      <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 h-full flex flex-col shadow-xl p-6 overflow-y-auto transition-colors">
         {/* Drawer Header */}
-        <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-200">
+        <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
-            <h3 className="text-base font-display font-bold text-slate-900">Question Map Navigator</h3>
-            <p className="text-xs text-slate-500">
+            <h3 className="text-base font-display font-bold text-slate-900 dark:text-white">Question Map Navigator</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               {answeredCount} of {total} Answered • {flaggedCount} Flagged
             </p>
           </div>
           <button
             onClick={() => setNavigatorDrawerOpen(false)}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+            className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-between text-[11px] font-mono text-slate-600 pb-3 mb-3 border-b border-slate-100">
+        <div className="flex items-center justify-between text-[11px] font-mono text-slate-600 dark:text-slate-400 pb-3 mb-3 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-slate-800" />
+            <span className="w-3 h-3 rounded bg-slate-800 dark:bg-slate-600" />
             <span>Answered</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-slate-100 border border-slate-300" />
+            <span className="w-3 h-3 rounded bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
             <span>Unanswered</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-amber-100 border border-amber-300" />
+            <span className="w-3 h-3 rounded bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700" />
             <span>Flagged</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded ring-2 ring-slate-900 bg-white" />
+            <span className="w-3 h-3 rounded ring-2 ring-slate-900 dark:ring-amber-500 bg-white dark:bg-slate-800" />
             <span>Current</span>
           </div>
         </div>
@@ -66,15 +66,15 @@ export const QuestionNavigatorDrawer: React.FC = () => {
             const isAnswered = ans?.selectedOption !== null;
             const isFlagged = ans?.flagged ?? false;
 
-            let buttonClass = 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-400';
+            let buttonClass = 'bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-500';
             if (isAnswered) {
-              buttonClass = 'bg-slate-900 border-slate-900 text-white font-medium';
+              buttonClass = 'bg-slate-900 dark:bg-slate-700 border-slate-900 dark:border-slate-600 text-white font-medium';
             }
             if (isFlagged && !isAnswered) {
-              buttonClass = 'bg-amber-50 border-amber-300 text-amber-900';
+              buttonClass = 'bg-amber-50 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-300';
             }
             if (isCurrent) {
-              buttonClass += ' ring-2 ring-slate-900 ring-offset-2 font-bold';
+              buttonClass += ' ring-2 ring-slate-900 dark:ring-amber-500 ring-offset-2 dark:ring-offset-slate-900 font-bold';
             }
 
             return (
@@ -85,7 +85,7 @@ export const QuestionNavigatorDrawer: React.FC = () => {
               >
                 <span>{idx + 1}</span>
                 {isFlagged && (
-                  <Flag className={`w-2.5 h-2.5 absolute top-1 right-1 ${isAnswered ? 'text-amber-300 fill-amber-300' : 'text-amber-600 fill-amber-600'}`} />
+                  <Flag className={`w-2.5 h-2.5 absolute top-1 right-1 ${isAnswered ? 'text-amber-300 fill-amber-300' : 'text-amber-600 dark:text-amber-400 fill-amber-600 dark:fill-amber-400'}`} />
                 )}
               </button>
             );
@@ -93,13 +93,13 @@ export const QuestionNavigatorDrawer: React.FC = () => {
         </div>
 
         {/* Drawer Footer actions */}
-        <div className="pt-4 mt-auto border-t border-slate-200">
+        <div className="pt-4 mt-auto border-t border-slate-200 dark:border-slate-800">
           <button
             onClick={() => {
               setNavigatorDrawerOpen(false);
               setConfirmSubmitModalOpen(true);
             }}
-            className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-display font-semibold text-xs shadow-sm transition-all"
+            className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-amber-500 dark:hover:bg-amber-400 text-white dark:text-slate-950 font-display font-semibold text-xs shadow-sm transition-all"
           >
             Submit Assessment
             <ArrowRight className="w-4 h-4" />

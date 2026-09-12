@@ -1,5 +1,6 @@
 import React from 'react';
 import { QuizProvider, useQuiz } from './context/QuizContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -17,7 +18,7 @@ const AppContent: React.FC = () => {
   useKeyboardShortcuts();
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 antialiased font-sans selection:bg-amber-100 selection:text-amber-900">
+    <div className="min-h-screen flex flex-col bg-[#f8fafc] dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans selection:bg-amber-100 selection:text-amber-900 dark:selection:bg-amber-950/60 dark:selection:text-amber-200 transition-colors duration-150">
       {/* Top Navigation */}
       <Navbar />
 
@@ -43,9 +44,11 @@ const AppContent: React.FC = () => {
 
 export function App() {
   return (
-    <QuizProvider>
-      <AppContent />
-    </QuizProvider>
+    <ThemeProvider>
+      <QuizProvider>
+        <AppContent />
+      </QuizProvider>
+    </ThemeProvider>
   );
 }
 

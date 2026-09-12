@@ -39,39 +39,39 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
   const hasAnswered = isMultiSelect ? selectedOptions.length > 0 : selectedOption !== null;
 
   let containerStyles =
-    'bg-white hover:bg-slate-50 border-slate-200 text-slate-800 hover:border-slate-300 shadow-subtle';
-  let badgeStyles = 'bg-slate-100 text-slate-700 border-slate-200';
+    'bg-white dark:bg-slate-900/90 hover:bg-slate-50 dark:hover:bg-slate-800/80 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 shadow-subtle';
+  let badgeStyles = 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700';
   let icon = isMultiSelect ? (
-    <Square className="w-4 h-4 text-slate-300 shrink-0" />
+    <Square className="w-4 h-4 text-slate-300 dark:text-slate-600 shrink-0" />
   ) : (
-    <Circle className="w-4 h-4 text-slate-300 shrink-0" />
+    <Circle className="w-4 h-4 text-slate-300 dark:text-slate-600 shrink-0" />
   );
 
   if (instantFeedback && hasAnswered) {
     if (isCorrect) {
-      containerStyles = 'bg-emerald-50/80 border-emerald-500 text-emerald-950 shadow-sm';
-      badgeStyles = 'bg-emerald-600 text-white font-bold border-emerald-600';
+      containerStyles = 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500 dark:border-emerald-500/70 text-emerald-950 dark:text-emerald-200 shadow-sm';
+      badgeStyles = 'bg-emerald-600 dark:bg-emerald-500 text-white font-bold border-emerald-600 dark:border-emerald-500';
       icon = isMultiSelect ? (
-        <CheckSquare className="w-5 h-5 text-emerald-600 shrink-0" />
+        <CheckSquare className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
       ) : (
-        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
       );
     } else if (isSelected && !isCorrect) {
-      containerStyles = 'bg-rose-50/80 border-rose-500 text-rose-950 shadow-sm';
-      badgeStyles = 'bg-rose-600 text-white font-bold border-rose-600';
-      icon = <XCircle className="w-5 h-5 text-rose-600 shrink-0" />;
+      containerStyles = 'bg-rose-50/80 dark:bg-rose-950/40 border-rose-500 dark:border-rose-500/70 text-rose-950 dark:text-rose-200 shadow-sm';
+      badgeStyles = 'bg-rose-600 dark:bg-rose-500 text-white font-bold border-rose-600 dark:border-rose-500';
+      icon = <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />;
     } else {
-      containerStyles = 'opacity-50 bg-white border-slate-200 text-slate-400';
-      badgeStyles = 'bg-slate-100 text-slate-400 border-slate-200';
+      containerStyles = 'opacity-50 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500';
+      badgeStyles = 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700';
     }
   } else if (isSelected) {
     containerStyles =
-      'bg-slate-900 border-slate-900 text-white shadow-sm font-medium';
-    badgeStyles = 'bg-slate-800 text-white font-bold border-slate-700';
+      'bg-slate-900 dark:bg-slate-800 border-slate-900 dark:border-amber-500/80 text-white dark:text-white shadow-sm font-medium ring-1 ring-slate-900 dark:ring-amber-500/40';
+    badgeStyles = 'bg-slate-800 dark:bg-amber-500 text-white dark:text-slate-950 font-bold border-slate-700 dark:border-amber-400';
     icon = isMultiSelect ? (
-      <CheckSquare className="w-5 h-5 text-white shrink-0" />
+      <CheckSquare className="w-5 h-5 text-white dark:text-amber-400 shrink-0" />
     ) : (
-      <CheckCircle2 className="w-5 h-5 text-white shrink-0" />
+      <CheckCircle2 className="w-5 h-5 text-white dark:text-amber-400 shrink-0" />
     );
   }
 
@@ -95,8 +95,8 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
         <kbd
           className={`hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.5 rounded border ${
             isSelected && !instantFeedback
-              ? 'bg-slate-800 text-slate-300 border-slate-700'
-              : 'bg-slate-50 text-slate-400 border-slate-200'
+              ? 'bg-slate-800 dark:bg-slate-700 text-slate-300 dark:text-slate-200 border-slate-700 dark:border-slate-600'
+              : 'bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700'
           }`}
         >
           {keyNumber}

@@ -16,23 +16,23 @@ export const QuizProgressBar: React.FC = () => {
 
   return (
     <div className="w-full space-y-1.5">
-      <div className="flex items-center justify-between text-xs font-mono text-slate-500">
+      <div className="flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
         <span>
-          Question <strong className="text-slate-900">{currentIdx + 1}</strong> of{' '}
-          <strong className="text-slate-900">{total}</strong>
+          Question <strong className="text-slate-900 dark:text-slate-200">{currentIdx + 1}</strong> of{' '}
+          <strong className="text-slate-900 dark:text-slate-200">{total}</strong>
         </span>
         <span>
-          Answered: <strong className="text-slate-800">{answeredCount}</strong> / {total} ({answeredPercentage}%)
+          Answered: <strong className="text-slate-800 dark:text-slate-200">{answeredCount}</strong> / {total} ({answeredPercentage}%)
         </span>
       </div>
 
-      <div className="relative w-full h-1.5 rounded-full bg-slate-200 overflow-hidden">
+      <div className="relative w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
         <div
-          className="absolute left-0 top-0 h-full bg-slate-400 transition-all duration-300"
+          className="absolute left-0 top-0 h-full bg-slate-400 dark:bg-slate-600 transition-all duration-300"
           style={{ width: `${answeredPercentage}%` }}
         />
         <div
-          className="absolute left-0 top-0 h-full bg-slate-900 transition-all duration-300"
+          className="absolute left-0 top-0 h-full bg-slate-900 dark:bg-amber-500 transition-all duration-300"
           style={{ width: `${progressPercentage}%` }}
         />
       </div>

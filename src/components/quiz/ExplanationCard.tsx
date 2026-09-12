@@ -19,14 +19,14 @@ export const ExplanationCard: React.FC<ExplanationCardProps> = ({
       : question.correctAnswer;
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 space-y-3.5 animate-fadeIn">
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-850/60 p-5 space-y-3.5 animate-fadeIn transition-colors">
       {/* Explanation Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="p-1 rounded-md bg-white border border-slate-200 text-slate-700">
+          <div className="p-1 rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-amber-400">
             <Lightbulb className="w-3.5 h-3.5" />
           </div>
-          <h4 className="text-xs font-mono font-bold tracking-wide uppercase text-slate-700">
+          <h4 className="text-xs font-mono font-bold tracking-wide uppercase text-slate-700 dark:text-slate-300">
             Concept & Explanation
           </h4>
         </div>
@@ -35,8 +35,8 @@ export const ExplanationCard: React.FC<ExplanationCardProps> = ({
           <span
             className={`text-xs font-mono font-semibold px-2.5 py-0.5 rounded-md border ${
               isCorrect
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                : 'bg-rose-50 text-rose-800 border-rose-200'
+                ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/80'
+                : 'bg-rose-50 dark:bg-rose-950/50 text-rose-800 dark:text-rose-300 border-rose-200 dark:border-rose-800/80'
             }`}
           >
             {isCorrect ? 'Correct' : 'Incorrect'}
@@ -46,8 +46,8 @@ export const ExplanationCard: React.FC<ExplanationCardProps> = ({
 
       {/* Correct answer reminder if wrong */}
       {isCorrect === false && (
-        <div className="p-3 rounded-lg bg-emerald-50/90 border border-emerald-200 flex items-start gap-2.5 text-xs text-emerald-900">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+        <div className="p-3 rounded-lg bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-start gap-2.5 text-xs text-emerald-900 dark:text-emerald-200">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
           <div>
             <span className="font-bold">
               {question.isMultiSelect ? 'Correct Options: ' : 'Correct Answer: '}
@@ -58,15 +58,15 @@ export const ExplanationCard: React.FC<ExplanationCardProps> = ({
       )}
 
       {/* Explanation text */}
-      <div className="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-1.5">
+      <div className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-1.5">
         <p>{question.explanation}</p>
       </div>
 
       {/* KC Context */}
-      <div className="pt-3 border-t border-slate-200 flex items-start gap-2 text-xs text-slate-500">
-        <BookOpen className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
+      <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-start gap-2 text-xs text-slate-500 dark:text-slate-400">
+        <BookOpen className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" />
         <div>
-          <span className="font-semibold text-slate-700">{question.kcTitle}: </span>
+          <span className="font-semibold text-slate-700 dark:text-slate-200">{question.kcTitle}: </span>
           <span>{question.summary}</span>
         </div>
       </div>

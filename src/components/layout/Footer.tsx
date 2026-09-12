@@ -7,11 +7,11 @@ export const Footer: React.FC = () => {
   const { setSupportModalOpen } = useQuiz();
 
   return (
-    <footer className="border-t border-slate-200 bg-white py-8 mt-16 text-slate-500 text-xs">
+    <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900/60 py-8 mt-16 text-slate-500 dark:text-slate-400 text-xs transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-700">{COURSE_INFO.courseName}</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-200">{COURSE_INFO.courseName}</span>
             <span>•</span>
             <span>Course ID: {COURSE_INFO.courseId}</span>
           </div>
@@ -27,9 +27,9 @@ export const Footer: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSupportModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/80 font-medium transition-colors"
             >
-              <Coffee className="w-3.5 h-3.5 text-amber-700" />
+              <Coffee className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
               <span>Buy Me a Coffee</span>
             </button>
           </div>

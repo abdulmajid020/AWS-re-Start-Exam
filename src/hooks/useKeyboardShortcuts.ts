@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useQuiz } from '../context/QuizContext';
+import { useTheme } from '../context/ThemeContext';
 
 export function useKeyboardShortcuts() {
   const {
@@ -22,6 +23,8 @@ export function useKeyboardShortcuts() {
     prevFlashcard,
   } = useQuiz();
 
+  const { toggleTheme } = useTheme();
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger shortcuts if typing inside input, textarea, or contentEditable
@@ -38,6 +41,14 @@ export function useKeyboardShortcuts() {
       if (e.key === '?') {
         e.preventDefault();
         setShortcutsModalOpen(!shortcutsModalOpen);
+        return;
+      }
+
+      // Toggle Theme on 'T' or 't' (or 'D'/'d' when not answering options in a quiz)
+      const isQuizAnswering = currentView === 'quiz' && session && !session.isFinished && currentQuestion;
+      if (e.key === 't' || e.key === 'T' || (!isQuizAnswering && (e.key === 'd' || e.key === 'D'))) {
+        e.preventDefault();
+        toggleTheme();
         return;
       }
 
@@ -144,5 +155,6 @@ export function useKeyboardShortcuts() {
     setIsFlipped,
     nextFlashcard,
     prevFlashcard,
+    toggleTheme,
   ]);
 }
